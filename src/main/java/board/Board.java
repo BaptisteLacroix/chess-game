@@ -89,7 +89,10 @@ public class Board extends VBox {
      */
     private void initializeWhitePawnCase(int i, ArrayList<Case> ligneActuelle) {
         for (int j = 1; j <= 8; j++) {
-            Case c = new Case(i, j, 1, new ImageView(new Image("file:resources/white_pieces/pawn_white.png")));
+            Case c = new Case(i, j, 1, new ImageView(new Image("file:resources/white_pieces/pawn_white.png")), "pawn_white" + j);
+            Background color = c.getBackground();
+            c.setOnMouseEntered(event -> this.whitePawnMoves(c));
+            c.setOnMouseExited(event -> this.resetWhitePawnMoves(c, color));
             setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/pawn_white.png")), c);
         }
     }
@@ -102,7 +105,10 @@ public class Board extends VBox {
      */
     private void initializeBlackPawnCase(int i, ArrayList<Case> ligneActuelle) {
         for (int j = 1; j <= 8; j++) {
-            Case c = new Case(i, j, 1, new ImageView(new Image("file:resources/black_pieces/pawn_black.png")));
+            Case c = new Case(i, j, -1, new ImageView(new Image("file:resources/black_pieces/pawn_black.png")), "pawn_black" + j);
+            Background color = c.getBackground();
+            c.setOnMouseEntered(event -> this.blackPawnMoves(c));
+            c.setOnMouseExited(event -> this.resetBlackPawnMoves(c, color));
             setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/pawn_black.png")), c);
         }
     }
@@ -115,7 +121,7 @@ public class Board extends VBox {
      */
     private void initializeEmptyCase(int i, ArrayList<Case> ligneActuelle) {
         for (int j = 1; j <= 8; j++) {
-            Case c = new Case(i, j, 0, null);
+            Case c = new Case(i, j, 0, null, "empty" + j);
             setCase(ligneActuelle, null, c);
         }
     }
@@ -127,28 +133,28 @@ public class Board extends VBox {
      * @param ligneActuelle the line we're currently working on
      */
     private void intializeLinesWhite(int i, ArrayList<Case> ligneActuelle) {
-        Case c = new Case(i, 1, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")));
+        Case c = new Case(i, 1, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), "rook_white1");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), c);
 
-        c = new Case(i, 2, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")));
+        c = new Case(i, 2, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), "knight_white1");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), c);
 
-        c = new Case(i, 3, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")));
+        c = new Case(i, 3, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), "bishop_white1");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), c);
 
-        c = new Case(i, 4, 9, new ImageView(new Image("file:resources/white_pieces/queen_white.png")));
+        c = new Case(i, 4, 9, new ImageView(new Image("file:resources/white_pieces/queen_white.png")), "queen_white");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/queen_white.png")), c);
 
-        c = new Case(i, 5, 800, new ImageView(new Image("file:resources/white_pieces/king_white.png")));
+        c = new Case(i, 5, 800, new ImageView(new Image("file:resources/white_pieces/king_white.png")), "king_white");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/king_white.png")), c);
 
-        c = new Case(i, 6, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")));
+        c = new Case(i, 6, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), "bishop_white2");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), c);
 
-        c = new Case(i, 7, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")));
+        c = new Case(i, 7, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), "knight_white2");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), c);
 
-        c = new Case(i, 8, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")));
+        c = new Case(i, 8, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), "rook_white2");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), c);
     }
 
@@ -159,28 +165,28 @@ public class Board extends VBox {
      * @param ligneActuelle the line we're currently working on
      */
     private void intializeLinesBlack(int i, ArrayList<Case> ligneActuelle) {
-        Case c = new Case(i, 1, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")));
+        Case c = new Case(i, 1, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), "rook_black1");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), c);
 
-        c = new Case(i, 2, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")));
+        c = new Case(i, 2, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), "knight_black1");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), c);
 
-        c = new Case(i, 3, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")));
+        c = new Case(i, 3, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), "bishop_black1");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), c);
 
-        c = new Case(i, 4, -9, new ImageView(new Image("file:resources/black_pieces/queen_black.png")));
+        c = new Case(i, 4, -9, new ImageView(new Image("file:resources/black_pieces/queen_black.png")), "queen_black");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/queen_black.png")), c);
 
-        c = new Case(i, 5, -800, new ImageView(new Image("file:resources/black_pieces/king_black.png")));
+        c = new Case(i, 5, -800, new ImageView(new Image("file:resources/black_pieces/king_black.png")), "king_black");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/king_black.png")), c);
 
-        c = new Case(i, 6, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")));
+        c = new Case(i, 6, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), "bishop_black2");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), c);
 
-        c = new Case(i, 7, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")));
+        c = new Case(i, 7, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), "knight_black2");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), c);
 
-        c = new Case(i, 8, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")));
+        c = new Case(i, 8, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), "rook_black2");
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), c);
     }
 
@@ -224,8 +230,8 @@ public class Board extends VBox {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Case piece = (Case) ((HBox) this.getChildren().get(i)).getChildren().get(j);
-                // if (piece.getImageView() != null) {
-                    piece.setOnDragDetected(event -> {
+                piece.setOnDragDetected(event -> {
+                    if (piece.getImageView() != null) {
                         Dragboard db = piece.startDragAndDrop(TransferMode.MOVE);
                         ClipboardContent content = new ClipboardContent();
                         ImageView image = piece.getImageView();
@@ -237,8 +243,8 @@ public class Board extends VBox {
                         db.setContent(content);
                         db.setDragView(piece.snapshot(null, null));
                         event.consume();
-                    });
-                // }
+                    }
+                });
             }
         }
     }
@@ -264,35 +270,12 @@ public class Board extends VBox {
                 piece.setOnDragDropped(dragEvent -> {
                     Dragboard db = dragEvent.getDragboard();
                     if (db.hasContent(this.dataFormat)) {
-                        System.out.println("---> " + db.getContent(this.dataFormat));
-
-
-                        // if the piece is dropped on the depot zone, it is removed from the board
-                        db.setDragViewOffsetX(piece.getX());
-                        db.setDragViewOffsetY(piece.getY());
-                        db.setDragView(db.getImage());
-
-                        System.out.println("Nouvelle valeur : " + db.getDragViewOffsetX() + " " + db.getDragViewOffsetY());
-                        System.out.println("Ancienne valeur : " + xDetected + " " + yDetected);
-
-
-                        // New position of the piece
-                        ImageView image = new ImageView(db.getDragView());
-                        piece.setImageView(image);
-                        piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
-                        piece.setValue((int) db.getContent(this.dataFormat));
-
-
-                        // Old position of the piece
-                        ((Case) ((HBox) this.getChildren().get(xDetected + 1)).getChildren().get(yDetected + 1)).setImageView(
-                                (ImageView) ((Case) ((HBox) this.getChildren().get((int) db.getDragViewOffsetX() - 1)).getChildren().get((int) db.getDragViewOffsetY() - 1)).getGraphic());
-
-                        ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setValue(
-                                ((Case) ((HBox) this.getChildren().get((int) db.getDragViewOffsetX() - 1)).getChildren().get((int) db.getDragViewOffsetY() - 1)).getValue());
-
-                        ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setNewPosition(xDetected, yDetected);
-
-
+                        String value = db.getContent(this.dataFormat).toString();
+                        if (Integer.parseInt(value) > 0) {
+                            this.setWhiteDropPiece(piece, db);
+                        } else {
+                            this.setBlackDropPiece(piece, db);
+                        }
                         // Drop Complete
                         dragEvent.setDropCompleted(true);
                     }
@@ -307,5 +290,211 @@ public class Board extends VBox {
                 setDragAndDrop();
             }
         }
+    }
+
+    private void setBlackDropPiece(Case piece, Dragboard db) {
+        if (piece.getValue() == 0) {
+
+            ImageView imageDB = null;
+            if (piece.getImageView() != null) {
+                imageDB = new ImageView(piece.getImageView().getImage());
+            }
+
+            // Set the piece on the board
+            db.setDragViewOffsetX(piece.getX());
+            db.setDragViewOffsetY(piece.getY());
+            db.setDragView(db.getImage());
+
+
+            // New position of the piece
+            String name = piece.getName();
+            ImageView imagePiece = new ImageView(db.getDragView());
+            piece.setImageView(imagePiece);
+            piece.setValue((int) db.getContent(this.dataFormat));
+            piece.setName(((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).getName());
+            piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
+            Background color = piece.getBackground();
+            piece.setOnMouseEntered(event -> this.blackPawnMoves(piece));
+            piece.setOnMouseExited(event -> this.resetBlackPawnMoves(piece, color));
+
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> this.resetWhitePawnMoves((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
+
+
+            // Old position of the piece
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setName(name);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(imageDB);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setValue(
+                    ((Case) ((HBox) this.getChildren().get((int) db.getDragViewOffsetX() - 1)).getChildren().get((int) db.getDragViewOffsetY() - 1)).getValue());
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setNewPosition(xDetected, yDetected);
+
+        } else if (piece.getValue() > 0) {
+
+            // Set the piece on the board
+            db.setDragViewOffsetX(piece.getX());
+            db.setDragViewOffsetY(piece.getY());
+            db.setDragView(db.getImage());
+
+
+            // New position of the piece
+            ImageView imagePiece = new ImageView(db.getDragView());
+            piece.setImageView(imagePiece);
+            piece.setValue((int) db.getContent(this.dataFormat));
+            piece.setName(((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).getName());
+            piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
+
+
+            // Old position of the piece
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(null);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setValue(0);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setNewPosition(xDetected, yDetected);
+
+        }
+    }
+
+    private void setWhiteDropPiece(Case piece, Dragboard db) {
+        if (piece.getValue() == 0) {
+
+            ImageView imageDB = null;
+            if (piece.getImageView() != null) {
+                imageDB = new ImageView(piece.getImageView().getImage());
+            }
+
+            // Set the piece on the board
+            db.setDragViewOffsetX(piece.getX());
+            db.setDragViewOffsetY(piece.getY());
+            db.setDragView(db.getImage());
+
+
+            // New position of the piece
+            String name = piece.getName();
+            ImageView imagePiece = new ImageView(db.getDragView());
+            piece.setImageView(imagePiece);
+            piece.setValue((int) db.getContent(this.dataFormat));
+            piece.setName(((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).getName());
+            piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
+            Background color = piece.getBackground();
+            piece.setOnMouseEntered(event -> this.whitePawnMoves(piece));
+            piece.setOnMouseExited(event -> this.resetWhitePawnMoves(piece, color));
+
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> this.resetWhitePawnMoves((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
+
+
+            // Old position of the piece
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setName(name);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(imageDB);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setValue(
+                    ((Case) ((HBox) this.getChildren().get((int) db.getDragViewOffsetX() - 1)).getChildren().get((int) db.getDragViewOffsetY() - 1)).getValue());
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setNewPosition(xDetected, yDetected);
+
+        } else if (piece.getValue() < 0) {
+
+            // Set the piece on the board
+            db.setDragViewOffsetX(piece.getX());
+            db.setDragViewOffsetY(piece.getY());
+            db.setDragView(db.getImage());
+
+
+            // New position of the piece
+            ImageView imagePiece = new ImageView(db.getDragView());
+            piece.setImageView(imagePiece);
+            piece.setValue((int) db.getContent(this.dataFormat));
+            piece.setName(((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).getName());
+            piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
+
+
+            // Old position of the piece
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(null);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setValue(0);
+            ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setNewPosition(xDetected, yDetected);
+
+        }
+    }
+
+    private void whiteRookMoves(Case piece) {
+    }
+
+    private void whiteKnightMoves(Case piece) {
+    }
+
+    private void whiteBishopMoves(Case piece) {
+    }
+
+    private void whiteQueenMoves(Case piece) {
+    }
+
+    private void whiteKingMoves(Case piece) {
+    }
+
+    private void whitePawnMoves(Case piece) {
+        if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+        } else if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() != 0) {
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).setStyle("-fx-background-color: red;");
+        } else if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() != 0) {
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setStyle("-fx-background-color: red;");
+        } else if (piece.getX() == 2) {
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+        }
+    }
+
+    private void resetWhitePawnMoves(Case piece, Background color) {
+        if (piece.getX() > 2) {
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setStyle(color.toString());
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).setStyle(color.toString());
+        } else if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() != 0) {
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setStyle(color.toString());
+        } else if (piece.getX() == 2) {
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setStyle(color.toString());
+        }
+    }
+
+    private void blackPawnMoves(Case piece) {
+        // liste_cases.get(piece.getX()).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+        // liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+
+        if        (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() == 0) {
+            liste_cases.get(piece.getX()).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+
+        } else if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() != 0) {
+            liste_cases.get(piece.getX()).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setStyle("-fx-background-color: red;");
+
+        } else if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() != 0) {
+            liste_cases.get(piece.getX()).get(piece.getY() - 1).setStyle("-fx-background-color: red;");
+        } else if (piece.getX() == 7) {
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setStyle("-fx-background-color: #5d5e5d;");
+        }
+    }
+
+    private void resetBlackPawnMoves(Case piece, Background color) {
+        liste_cases.get(piece.getX()).get(piece.getY() - 1).setStyle(color.toString());
+        liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setStyle(color.toString());
+    }
+
+    private void print() {
+        for (int i = 0; i < liste_cases.size(); i++) {
+            for (int j = 0; j < liste_cases.get(i).size(); j++) {
+                System.out.print("(" + liste_cases.get(i).get(j).getX() + "," + liste_cases.get(i).get(j).getY() + "),");
+            }
+            System.out.println();
+        }
+    }
+
+    private void blackRookMoves(Case piece) {
+    }
+
+    private void blackKnightMoves(Case piece) {
+    }
+
+    private void blackBishopMoves(Case piece) {
+    }
+
+    private void blackQueenMoves(Case piece) {
+    }
+
+    private void blackKingMoves(Case piece) {
     }
 }

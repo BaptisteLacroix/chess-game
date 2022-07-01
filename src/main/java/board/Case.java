@@ -12,13 +12,15 @@ public class Case extends Label {
     private int y;
     private int value;
     private ImageView image;
+    private String name;
 
-    public Case(int x, int y, int value, ImageView image) {
+    public Case(int x, int y, int value, ImageView image, String name) {
         super();
         this.x = x;
         this.y = y;
         this.value = value;
         this.image = image;
+        this.name = name;
         init();
     }
 
@@ -36,10 +38,11 @@ public class Case extends Label {
     public void setNewPosition(int x, int y) {
         this.x = x;
         this.y = y;
-        image.setFitHeight(500 / (double) 8);
-        image.setFitWidth(500 / (double) 8);
+        if (this.image != null) {
+            image.setFitHeight(500 / (double) 8);
+            image.setFitWidth(500 / (double) 8);
+        }
         super.setGraphic(image);
-        System.out.println("SetGraphic  : " + this.x + " " + this.y);
     }
 
     public int getX() {
@@ -64,5 +67,16 @@ public class Case extends Label {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public String toString() {
+        return "Case name : " + this.name + ": " + this.x + " " + this.y + " " + this.value;
     }
 }
