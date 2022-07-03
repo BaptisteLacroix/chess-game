@@ -338,16 +338,26 @@ public class Board extends VBox {
         db.setDragViewOffsetY(piece.getY());
         switch (source.getValue()) {
             case 1:
-                if (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) {
-                    this.setWhiteDropPiece(piece, db);
-                } else if (db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) {
-                    this.setWhiteDropPiece(piece, db);
-                } else if ((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 1 ||
-                        db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 1 ) && piece.getValue() < 0) {
+                if ((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0)
+                        || ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) &&
+                        (((Case) ((HBox) this.getChildren().get(source.getX() - 2)).getChildren().get(source.getY() - 1)).getValue() == 0)) ||
+                        ((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 1 ||
+                                db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 1) && piece.getValue() < 0)) {
                     this.setWhiteDropPiece(piece, db);
                 }
                 break;
-
+            case 2:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case 3:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case 5:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case 9:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case 800:
+                throw new UnsupportedOperationException("Not supported yet.");
+            default:
+                throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
@@ -356,20 +366,26 @@ public class Board extends VBox {
         db.setDragViewOffsetY(piece.getY());
         switch (source.getValue()) {
             case -1:
-                System.out.println(piece.getX() + " " + piece.getY());
-                System.out.println(db.getDragViewOffsetX() + " " + db.getDragViewOffsetY());
-                System.out.println((source.getX() + 2) + " " + (source.getY() - 1));
-                System.out.println((source.getX() + 2) + " " + (source.getY() + 1) + "\n");
-                if (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) {
-                    this.setWhiteDropPiece(piece, db);
-                } else if (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) {
-                    this.setWhiteDropPiece(piece, db);
-                } else if ((db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 1 ||
-                        db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 1 ) && piece.getValue() > 0) {
-                    this.setWhiteDropPiece(piece, db);
+                if ((db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0)
+                        || (piece.getX() < 8 && (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) &&
+                        ((Case) ((HBox) this.getChildren().get(source.getX())).getChildren().get(source.getY() - 1)).getValue() == 0) ||
+                        (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 1 ||
+                                db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 1) && piece.getValue() > 0) {
+                    this.setBlackDropPiece(piece, db);
                 }
                 break;
-
+            case -2:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case -3:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case -5:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case -9:
+                throw new UnsupportedOperationException("Not supported yet.");
+            case -800:
+                throw new UnsupportedOperationException("Not supported yet.");
+            default:
+                throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
