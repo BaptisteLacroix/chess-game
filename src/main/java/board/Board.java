@@ -428,18 +428,20 @@ public class Board extends VBox {
                     int colonne = 0;
                     if (db.getDragViewOffsetX() > source.getX()) {
                         System.out.println("BAS");
-                        while (isValid && piece.getX() + colonne < db.getDragViewOffsetX()) { // Bas
-                            System.out.println(colonne);
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() != 0) {
+                        while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
+                                            (source.getX() + colonne + 1) != db.getDragViewOffsetX())) {
                                 isValid = false;
                             }
                             colonne++;
                         }
                     } else {
                         System.out.println("HAUT");
-                        while (isValid && piece.getX() + colonne < db.getDragViewOffsetX()) { // Haut
-                            System.out.println(colonne);
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - 2 - colonne)).getChildren().get(source.getY() - 1)).getValue() != 0) {
+                        while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
+                                            (source.getX() - colonne + 1) != db.getDragViewOffsetX())) {
                                 isValid = false;
                             }
                             colonne++;
