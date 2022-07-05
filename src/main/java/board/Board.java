@@ -365,8 +365,59 @@ public class Board extends VBox {
             case 3:
                 throw new UnsupportedOperationException("Not supported yet.");
             case 5:
-                if ((db.getDragViewOffsetX() == source.getX()) || (db.getDragViewOffsetY() == source.getY())) {
-                    this.setWhiteDropPiece(piece, db);
+                if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
+                    boolean isValid = true;
+                    int ligne = 0;
+                    if (db.getDragViewOffsetY() > source.getY()) {
+                        while (isValid && (source.getY() + ligne) < db.getDragViewOffsetY()) { // Droite
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() < 0 &&
+                                            (source.getY() + ligne + 1) != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            ligne++;
+                        }
+                    } else {
+                        ligne = 1;
+                        while (isValid && (source.getY() - ligne) > db.getDragViewOffsetY()) { // Gauche
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() < 0 &&
+                                            (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            ligne++;
+                        }
+                    }
+                    if (isValid) {
+                        this.setWhiteDropPiece(piece, db);
+                    }
+
+                } else if (db.getDragViewOffsetY() == source.getY()) { // Haut Bas
+                    boolean isValid = true;
+                    int colonne = 0;
+                    if (db.getDragViewOffsetX() > source.getX()) {
+                        while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
+                                            (source.getX() + colonne + 1) != db.getDragViewOffsetX())) {
+                                isValid = false;
+                            }
+                            colonne++;
+                        }
+                    } else {
+                        colonne = 1;
+                        while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
+                                            (source.getX() - colonne + 1) != db.getDragViewOffsetX())) {
+                                isValid = false;
+                            }
+                            colonne++;
+                        }
+                    }
+                    if (isValid) {
+                        this.setWhiteDropPiece(piece, db);
+                    }
                 }
                 break;
             case 9:
@@ -427,7 +478,6 @@ public class Board extends VBox {
                     boolean isValid = true;
                     int colonne = 0;
                     if (db.getDragViewOffsetX() > source.getX()) {
-                        System.out.println("BAS");
                         while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
                             if (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
                                     (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
@@ -437,7 +487,7 @@ public class Board extends VBox {
                             colonne++;
                         }
                     } else {
-                        System.out.println("HAUT");
+                        colonne = 1;
                         while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
                             if (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
                                     (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
@@ -450,7 +500,6 @@ public class Board extends VBox {
                     if (isValid) {
                         this.setBlackDropPiece(piece, db);
                     }
-                    System.out.println();
                 }
                 break;
             case -9:
