@@ -361,9 +361,10 @@ public class Board extends VBox {
                 }
                 break;
             case 2:
-                throw new UnsupportedOperationException("Not supported yet.");
+                this.setWhiteDropPiece(piece, db);
+                break;
             case 3:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("3 : Not supported yet.");
             case 5:
                 if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
                     boolean isValid = true;
@@ -421,11 +422,11 @@ public class Board extends VBox {
                 }
                 break;
             case 9:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("9 : Not supported yet.");
             case 800:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("800 : Not supported yet.");
             default:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("Default : Not supported yet.");
         }
     }
 
@@ -443,9 +444,10 @@ public class Board extends VBox {
                 }
                 break;
             case -2:
-                throw new UnsupportedOperationException("Not supported yet.");
+                this.setBlackDropPiece(piece, db);
+                break;
             case -3:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("-3 : Not supported yet.");
             case -5:
                 if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
                     boolean isValid = true;
@@ -464,7 +466,7 @@ public class Board extends VBox {
                         while (isValid && (source.getY() - ligne) > db.getDragViewOffsetY()) { // Gauche
                             if (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() < 0 ||
                                     (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() > 0 &&
-                                    (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
+                                            (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
                                 isValid = false;
                             }
                             ligne++;
@@ -503,11 +505,11 @@ public class Board extends VBox {
                 }
                 break;
             case -9:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("-9 : Not supported yet.");
             case -800:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("-800 : Not supported yet.");
             default:
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException("Default : Not supported yet.");
         }
     }
 
@@ -1048,11 +1050,342 @@ public class Board extends VBox {
     }
 
     private void whiteKnightMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Haut Droite et Gauche
+        this.whiteKnightMoveUp(piece);
+
+        // Droite Haut et Bas
+        this.whiteKnightMoveRight(piece);
+
+        // Bas Droite et Gauche
+        this.whiteKnightMoveDown(piece);
+
+        // Gauche Haut et Bas
+        this.whiteKnightMoveLeft(piece);
+    }
+
+
+    private void whiteKnightMoveUp(Case piece) {
+        if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
+            // Case droite ennemie et case gauche ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(red); // Case droite ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() > 0) {
+            // Case droite ennemie et case gauche alliée
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(red); // Case droite ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0 && liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() > 0) {
+            // Case gauche ennemie et case droite alliée
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0) {
+            // Case droite ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(red); // Case droite ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(image);
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
+            // Case gauche ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(image); // Case droite vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
+            // Cases vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(image); // Case droite vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(image2); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0) {
+            // Case droite alliée et case gauche vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(image2); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
+            // Case gauche alliée et case droite vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(image); // Case droite vide
+        }
+    }
+
+    private void whiteKnightMoveRight(Case piece) {
+        if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
+            // Case basse ennemie et case haute ennemie
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(red); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(red); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
+            // Case haute ennemie et basse alliée
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(red);
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0 && liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() > 0) {
+            // Case basse ennemie et case haute alliée
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(red);
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0) {
+            // Case basse ennemie et case haute vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(red); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(newImage); // Case haute vide
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
+            // Case haute ennemie et case basse vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(newImage); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(red); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
+            // Cases vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            ImageView newImage2 = new ImageView("file:./resources/dot.png");
+            newImage2.setFitHeight(500 / (double) 8);
+            newImage2.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(newImage); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(newImage2); // Case haute vide
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() > 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
+            // Case basse alliée et case haute vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(newImage); // Case haute vide
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
+            // Case haute alliée et case basse vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(newImage); // Case basse vide
+        }
+    }
+
+    private void whiteKnightMoveLeft(Case piece) {
+        if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
+            // Case basse ennemie et case haute ennemie
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(red); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(red); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0 && liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() > 0) {
+            // Case haute ennemie et basse alliée
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(red); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
+            // Case basse ennemie et case haute alliée
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(red); // Case basse ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0) {
+            // Case basse ennemie et case haute vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(red); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(newImage); // Case haute vide
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
+            // Case haute ennemie et case basse vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(newImage); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(red); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
+            // Cases vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            ImageView newImage2 = new ImageView("file:./resources/dot.png");
+            newImage2.setFitHeight(500 / (double) 8);
+            newImage2.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(newImage); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(newImage2); // Case haute vide
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() > 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
+            // Case basse alliée et case haute vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(newImage); // Case haute vide
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
+            // Case haute alliée et case basse vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(newImage); // Case basse vide
+        }
+    }
+
+    private void whiteKnightMoveDown(Case piece) {
+        if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0 && liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0) {
+            // Case gauche ennemie et case droite ennemie
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(red); // Case droite ennemie
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
+            // Case droite ennemie et case gauche alliée
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(red);
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0 && liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() > 0) {
+            // Case gauche ennemie et case droite alliée
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(red);
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0) {
+            // Case droite ennemie et case gauche vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(red); // Case droite ennemie
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(newImage); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0) {
+            // Case gauche ennemie et case droite vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(newImage); // Case droite vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
+            // Cases vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            ImageView newImage2 = new ImageView("file:./resources/dot.png");
+            newImage2.setFitHeight(500 / (double) 8);
+            newImage2.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(newImage); // Case droite vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(newImage2); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() > 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
+            // Case droite alliée et case gauche vide
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(newImage); // Case droite alliée
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
+            // Case droite vide et case gauche alliée
+            ImageView newImage = new ImageView("file:./resources/dot.png");
+            newImage.setFitHeight(500 / (double) 8);
+            newImage.setFitWidth(500 / (double) 8);
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(newImage); // Case droite vide
+        }
     }
 
     private void resetWhiteKnightMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Haut Droite et Gauche
+        this.resetWhiteKnightMoveUp(piece, color);
+
+        // Droite Haut et Bas
+        this.resetWhiteKnightMoveRight(piece, color);
+
+        // Bas Droite et Gauche
+        this.resetWhiteKnightMoveDown(piece, color);
+
+        // Gauche Haut et Bas
+        this.resetWhiteKnightMoveLeft(piece, color);
+    }
+
+    private void resetWhiteKnightMoveUp(Case piece, Background color) {
+        if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
+            // Case gauche ennemie et case droite ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(color.toString()); // Case droite ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(color.toString()); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() > 0) {
+            // Case droite ennemie et case droite Alliée
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(color.toString()); // Case droite ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0 && liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() > 0) {
+            // Case gauche ennemie et case gauche Alliée
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(color.toString()); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0) {
+            // Case Droite ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(color.toString()); // Case droite ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(null); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
+            // Case Gauche ennemie
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(null); // Case droite vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(color.toString()); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
+            // Cases vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(null); // Case droite vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(null); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0) {
+            // Case droite alliée et case gauche vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(null); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
+            // Case gauche alliée et case droite vide
+            liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(null); // Case droite vide
+        }
+    }
+
+    private void resetWhiteKnightMoveRight(Case piece, Background color) {
+        if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
+            // Case basse ennemie et case haute ennemie
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(color.toString()); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(color.toString()); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
+            // Case haute ennemie et basse alliée
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(color.toString());
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0 && liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() > 0) {
+            // Case basse ennemie et case haute alliée
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(color.toString());
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0) {
+            // Case basse ennemie et case haute vide
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(color.toString()); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(null); // Case haute vide
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
+            // Case haute ennemie et case basse vide
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(null); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(color.toString()); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
+            // Cases vide
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(null); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(null); // Case haute vide
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0) {
+            // Case basse alliée et case haute vide
+            liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(null); // Case basse vide
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
+            // Case haute alliée et case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(null); // Case haute vide
+        }
+    }
+
+    private void resetWhiteKnightMoveLeft(Case piece, Background color) {
+        if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
+            // Case basse ennemie et case haute ennemie
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(color.toString()); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(color.toString()); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0 && liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() > 0) {
+            // Case haute ennemie et basse alliée
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(color.toString()); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
+            // Case basse ennemie et case haute alliée
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(color.toString()); // Case basse ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0) {
+            // Case basse ennemie et case haute vide
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(color.toString()); // Case basse ennemie
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(null); // Case haute vide
+        } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
+            // Case haute ennemie et case basse vide
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(null); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(color.toString()); // Case haute ennemie
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
+            // Cases vide
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(null); // Case basse vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(null); // Case haute vide
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() > 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
+            // Case basse alliée et case haute vide
+            liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(null); // Case haute vide
+        } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
+            // Case haute alliée et case basse vide
+            liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(null); // Case basse vide
+        }
+    }
+
+    private void resetWhiteKnightMoveDown(Case piece, Background color) {
+        if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0 && liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0) {
+            // Case gauche ennemie et case droite ennemie
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(color.toString()); // Case gauche ennemie
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(color.toString()); // Case droite ennemie
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
+            // Case droite ennemie et case gauche alliée
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(color.toString());
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0 && liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() > 0) {
+            // Case gauche ennemie et case droite alliée
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(color.toString());
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0) {
+            // Case droite ennemie et case gauche vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(color.toString()); // Case droite ennemie
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(null); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0) {
+            // Case gauche ennemie et case droite vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(null); // Case droite vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(color.toString()); // Case gauche ennemie
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
+            // Cases vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(null); // Case droite vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(null); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() > 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
+            // Case droite alliée et case gauche vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(null); // Case gauche vide
+        } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
+            // Case gauche alliée et case droite vide
+            liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(null); // Case gauche alliée
+        }
     }
 
     private void whiteBishopMoves(Case piece) {
