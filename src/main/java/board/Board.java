@@ -2,6 +2,8 @@ package board;
 
 import java.util.ArrayList;
 
+import pieces.Knight;
+import pieces.Pawn;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,6 +12,7 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
+import pieces.Rook;
 
 
 /**
@@ -31,8 +34,6 @@ public class Board extends VBox {
     private int yDetected;
     private static final String yellow = "-fx-background-color: yellow;";
     private static final String red = "-fx-background-color: red;";
-    ImageView image = new ImageView("file:./resources/dot.png");
-    ImageView image2 = new ImageView("file:./resources/dot.png");
 
     // It creates a board with the pieces in their initial positions
     public Board(int witdh, int height) {
@@ -41,12 +42,6 @@ public class Board extends VBox {
         this.setWidth(witdh);
         // Couleur marron
         this.setStyle("-fx-background-color: rgb(59,54,51); -fx-margin: 100px");
-
-        image.setFitHeight(500 / (double) 8);
-        image.setFitWidth(500 / (double) 8);
-
-        image2.setFitHeight(500 / (double) 8);
-        image2.setFitWidth(500 / (double) 8);
 
         init();
         for (int i = 0; i < 8; i++) {
@@ -104,11 +99,11 @@ public class Board extends VBox {
             Background color = c.getBackground();
             c.setOnMouseEntered(event -> {
                 c.setStyle(yellow);
-                this.whitePawnMoves(c);
+                Pawn.whitePawnMoves(this.liste_cases, c);
             });
             c.setOnMouseExited(event -> {
                 c.setStyle(color.toString());
-                this.resetWhitePawnMoves(c, color);
+                Pawn.resetWhitePawnMoves(this.liste_cases, c, color);
             });
             setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/pawn_white.png")), c);
         }
@@ -126,11 +121,11 @@ public class Board extends VBox {
             Background color = c.getBackground();
             c.setOnMouseEntered(event -> {
                 c.setStyle(yellow);
-                this.blackPawnMoves(c);
+                Pawn.blackPawnMoves(this.liste_cases, c);
             });
             c.setOnMouseExited(event -> {
                 c.setStyle(color.toString());
-                this.resetBlackPawnMoves(c, color);
+                Pawn.resetBlackPawnMoves(this.liste_cases, c, color);
             });
             setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/pawn_black.png")), c);
         }
@@ -542,8 +537,7 @@ public class Board extends VBox {
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
 
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> this.resetWhitePawnMoves((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
-
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
             // Old position of the piece
             ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setName(name);
@@ -567,7 +561,7 @@ public class Board extends VBox {
             piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> this.resetWhitePawnMoves((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
 
             // Old position of the piece
@@ -606,7 +600,7 @@ public class Board extends VBox {
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
 
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> this.resetWhitePawnMoves((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
 
             // Old position of the piece
@@ -631,7 +625,7 @@ public class Board extends VBox {
             piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> this.resetWhitePawnMoves((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
 
             // Old position of the piece
@@ -662,21 +656,21 @@ public class Board extends VBox {
             case -1:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.blackPawnMoves(piece);
+                    Pawn.blackPawnMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetBlackPawnMoves(piece, color);
+                    Pawn.resetBlackPawnMoves(this.liste_cases, piece, color);
                 });
                 break;
             case -2:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.blackKnightMoves(piece);
+                    Knight.blackKnightMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetBlackKnightMoves(piece, color);
+                    Knight.resetBlackKnightMoves(this.liste_cases, piece, color);
                 });
                 break;
             case -3:
@@ -692,11 +686,11 @@ public class Board extends VBox {
             case -5:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.blackRookMoves(piece);
+                    Rook.blackRookMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetBlackRookMoves(piece, color);
+                    Rook.resetBlackRookMoves(this.liste_cases, piece, color);
                 });
                 break;
             case -9:
@@ -722,21 +716,21 @@ public class Board extends VBox {
             case 1:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.whitePawnMoves(piece);
+                    Pawn.whitePawnMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetWhitePawnMoves(piece, color);
+                    Pawn.resetWhitePawnMoves(this.liste_cases, piece, color);
                 });
                 break;
             case 2:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.whiteKnightMoves(piece);
+                    Knight.whiteKnightMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetWhiteKnightMoves(piece, color);
+                    Knight.resetWhiteKnightMoves(this.liste_cases, piece, color);
                 });
                 break;
             case 3:
@@ -752,11 +746,11 @@ public class Board extends VBox {
             case 5:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.whiteRookMoves(piece);
+                    Rook.whiteRookMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetWhiteRookMoves(piece, color);
+                    Rook.resetWhiteRookMoves(this.liste_cases, piece, color);
                 });
                 break;
             case 9:
@@ -783,508 +777,6 @@ public class Board extends VBox {
         }
     }
 
-    /**
-     * This function will check all the possible moves of a white pawn.
-     *
-     * @param piece the piece that is being moved
-     */
-    private void whitePawnMoves(Case piece) {
-        if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
-            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setGraphic(image);
-            liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).setGraphic(image2);
-        } else if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() < 0) {
-            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setGraphic(image);
-        } else {
-            if (piece.getX() > 1 && piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
-                liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(red);
-            }
-            if (piece.getX() > 1 && piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
-                liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(red);
-            }
-        }
-    }
-
-    /**
-     * It resets the pawn's moves
-     *
-     * @param piece the piece we want to reset the moves for
-     * @param color the color of the piece
-     */
-    private void resetWhitePawnMoves(Case piece, Background color) {
-        if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
-            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setGraphic(null);
-            liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).setGraphic(null);
-        } else if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() < 0) {
-            liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setGraphic(null);
-        } else {
-            if (piece.getX() > 1 && piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
-                liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(color.toString());
-            }
-            if (piece.getX() > 1 && piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
-                liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(color.toString());
-            }
-        }
-    }
-
-    /**
-     * This function will check all the possible moves of a white rook.
-     *
-     * @param piece the piece we want to move
-     */
-    private void whiteRookMoves(Case piece) {
-        // Colonne Bas
-        this.whiteRookMoveDown(piece);
-
-        // Ligne droite
-        this.whiteRookMoveRight(piece);
-
-        // Colonne Haut
-        this.whiteRookMoveUp(piece);
-
-        // Ligne Gauche
-        this.whiteRookMoveLeft(piece);
-    }
-
-    /**
-     * It resets the rook's moves
-     *
-     * @param piece the piece we want to reset the moves for
-     * @param color the color of the piece
-     */
-    private void resetWhiteRookMoves(Case piece, Background color) {
-        // Colonne Bas
-        this.resetWhiteRookMoveDown(piece, color);
-
-        // Ligne droite
-        this.resetWhiteRookMoveRight(piece, color);
-
-        // Colonne Haut
-        this.resetWhiteRookMoveUp(piece, color);
-
-        // Ligne Gauche
-        this.resetWhiteRookMoveLeft(piece, color);
-    }
-
-    /**
-     * It checks if the white rook can move down, and if it can, it highlights the possible moves
-     *
-     * @param piece the piece that is being moved
-     */
-    private void whiteRookMoveDown(Case piece) {
-        int colonne = 0;
-        boolean adversaire = false;
-        while (piece.getX() + colonne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setGraphic(newImage);
-                colonne++;
-            }
-        }
-    }
-
-    /**
-     * It checks if the white rook can move up, and if it can, it highlights the possible moves
-     *
-     * @param piece the piece that is being moved
-     */
-    private void whiteRookMoveUp(Case piece) {
-        int colonne = 1;
-        boolean adversaire = false;
-        while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setGraphic(newImage);
-                colonne++;
-            }
-        }
-    }
-
-    /**
-     * It checks if the white rook can move right, and if it can, it highlights the possible moves
-     *
-     * @param piece the piece that is selected
-     */
-    private void whiteRookMoveRight(Case piece) {
-        int ligne = 0;
-        boolean adversaire = false;
-        while (piece.getY() + ligne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setGraphic(newImage);
-                ligne++;
-            }
-        }
-    }
-
-    /**
-     * It checks if the white rook can move left, and if it can, it highlights the possible moves
-     *
-     * @param piece the piece that is selected
-     */
-    private void whiteRookMoveLeft(Case piece) {
-        int ligne = 1;
-        boolean adversaire = false;
-        while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setGraphic(newImage);
-                ligne++;
-            }
-        }
-    }
-
-    /**
-     * It resets the rook's moves
-     *
-     * @param piece the case where the piece is
-     * @param color the color of the piece
-     */
-    private void resetWhiteRookMoveDown(Case piece, Background color) {
-        int colonne = 0;
-        boolean adversaire = false;
-        while (piece.getX() + colonne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setGraphic(null);
-                colonne++;
-            }
-        }
-    }
-
-    /**
-     * It resets the rook's moves
-     *
-     * @param piece the case where the piece is
-     * @param color the color of the piece
-     */
-    private void resetWhiteRookMoveUp(Case piece, Background color) {
-        int colonne = 1;
-        boolean adversaire = false;
-        while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setGraphic(null);
-                colonne++;
-            }
-        }
-    }
-
-    /**
-     * It resets the rook's moves
-     *
-     * @param piece the case where the piece is
-     * @param color the color of the piece
-     */
-    private void resetWhiteRookMoveRight(Case piece, Background color) {
-        int ligne = 0;
-        boolean adversaire = false;
-        while (piece.getY() + ligne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setGraphic(null);
-                ligne++;
-            }
-        }
-    }
-
-    /**
-     * It resets the rook's moves
-     *
-     * @param piece the case where the piece is
-     * @param color the color of the piece
-     */
-    private void resetWhiteRookMoveLeft(Case piece, Background color) {
-        int ligne = 1;
-        boolean adversaire = false;
-        while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() < 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() > 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setGraphic(null);
-                ligne++;
-            }
-        }
-    }
-
-    private void whiteKnightMoves(Case piece) {
-        // Haut Droite et Gauche
-        this.whiteKnightMoveUp(piece);
-
-        // Droite Haut et Bas
-        this.whiteKnightMoveLeft(piece);
-
-        // Bas Droite et Gauche
-        this.whiteKnightMoveDown(piece);
-
-        // Gauche Haut et Bas
-        this.whiteKnightMoveRight(piece);
-    }
-    
-    private void whiteKnightMoveUp(Case piece) {
-        if (piece.getX() > 2 && piece.getY() > 1) { // Case gauche possible
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
-                // case gauche ennemie
-                liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
-            }
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
-                // case gauche libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(newImage); // Case gauche libre
-            }
-        }
-        if (piece.getX() > 2 && piece.getY() < 8) {
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0) {
-                // Case droite ennemie
-                liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(red); // Case droite ennemie
-            }
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0) {
-                // Case droite libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(newImage); // Case droite libre
-            }
-        }
-    }
-
-    private void whiteKnightMoveLeft(Case piece) {
-        if (piece.getY() > 2 && piece.getX() > 1) { // Case haut possible
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
-                // case haut ennemie
-                liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(red); // Case haut ennemie
-            }
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
-                // case haut libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(newImage); // Case haut libre
-            }
-        }
-        if (piece.getY() > 2 && piece.getX() < 8) {
-            if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0) {
-                // Case bas ennemie
-                liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(red); // Case bas ennemie
-            }
-            if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0) {
-                // Case bas libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(newImage); // Case bas libre
-            }
-        }
-    }
-
-    private void whiteKnightMoveRight(Case piece) {
-        if (piece.getY() < 7 && piece.getX() > 1) { // Case haut possible
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
-                // case haut ennemie
-                liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(red); // Case haut ennemie
-            }
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
-                // case haut libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(newImage); // Case haut libre
-            }
-        }
-        if (piece.getY() < 7 && piece.getX() < 7) {
-            if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0) {
-                // Case bas ennemie
-                liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(red); // Case bas ennemie
-            }
-            if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0) {
-                // Case bas libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(newImage); // Case bas libre
-            }
-        }
-    }
-
-    private void whiteKnightMoveDown(Case piece) {
-        if (piece.getX() < 7 && piece.getY() > 1) {
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0) {
-                // case gauche ennemie
-                liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
-            }
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
-                // case gauche libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(newImage); // Case gauche libre
-            }
-        }
-        if (piece.getX() < 7 && piece.getY() < 8) {
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0) {
-                // Case droite ennemie
-                liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(red); // Case droite ennemie
-            }
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0) {
-                // Case droite libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(newImage); // Case droite libre
-            }
-        }
-    }
-
-    private void resetWhiteKnightMoves(Case piece, Background color) {
-        // Haut Droite et Gauche
-        this.resetWhiteKnightMoveUp(piece, color);
-
-        // Droite Haut et Bas
-        this.resetWhiteKnightMoveLeft(piece, color);
-
-        // Bas Droite et Gauche
-        this.resetWhiteKnightMoveDown(piece, color);
-
-        // Gauche Haut et Bas
-        this.resetWhiteKnightMoveRight(piece, color);
-    }
-
-    private void resetWhiteKnightMoveUp(Case piece, Background color) {
-        if (piece.getX() > 2 && piece.getY() > 1) { // Case gauche possible
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
-                // case gauche ennemie
-                liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(color.toString()); // Case gauche ennemie
-            }
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
-                // case gauche libre
-                liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(null); // Case gauche libre
-            }
-        }
-        if (piece.getX() > 2 && piece.getY() < 8) {
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0) {
-                // Case droite ennemie
-                liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(color.toString()); // Case droite ennemie
-            }
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0) {
-                // Case droite libre
-                liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(null); // Case droite libre
-            }
-        }
-    }
-
-    private void resetWhiteKnightMoveLeft(Case piece, Background color) {
-        if (piece.getY() > 2 && piece.getX() > 1) { // Case haut possible
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
-                // case haut ennemie
-                liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(color.toString()); // Case haut ennemie
-            }
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
-                // case haut libre
-                liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(null); // Case haut libre
-            }
-        }
-        if (piece.getY() > 2 && piece.getX() < 8) {
-            if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0) {
-                // Case bas ennemie
-                liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(color.toString()); // Case bas ennemie
-            }
-            if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0) {
-                // Case bas libre
-                liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(null); // Case bas libre
-            }
-        }
-    }
-
-    private void resetWhiteKnightMoveRight(Case piece, Background color) {
-        if (piece.getY() < 7 && piece.getX() > 1) { // Case haut possible
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
-                // case haut ennemie
-                liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(color.toString()); // Case haut ennemie
-            }
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
-                // case haut libre
-                liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(null); // Case haut libre
-            }
-        }
-        if (piece.getY() < 7 && piece.getX() < 7) {
-            if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0) {
-                // Case bas ennemie
-                liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(color.toString()); // Case bas ennemie
-            }
-            if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0) {
-                // Case bas libre
-                liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(null); // Case bas libre
-            }
-        }
-    }
-
-    private void resetWhiteKnightMoveDown(Case piece, Background color) {
-        if (piece.getX() < 7 && piece.getY() > 1) { // Case gauche possible
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0) {
-                // case gauche ennemie
-                liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(color.toString()); // Case gauche ennemie
-            }
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
-                // case gauche libre
-                liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(null); // Case gauche libre
-            }
-        }
-        if (piece.getX() < 7 && piece.getY() < 8) {
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0) {
-                // Case droite ennemie
-                liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(color.toString()); // Case droite ennemie
-            }
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0) {
-                // Case droite libre
-                liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(null); // Case droite libre
-            }
-        }
-    }
-
     private void whiteBishopMoves(Case piece) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -1306,229 +798,6 @@ public class Board extends VBox {
     }
 
     private void resetWhiteKingMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * This function will check all the possible moves of a black pawn.
-     *
-     * @param piece the piece that is being moved
-     */
-    private void blackPawnMoves(Case piece) {
-        if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() == 0) {
-            liste_cases.get(piece.getX()).get(piece.getY() - 1).setGraphic(image);
-            liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setGraphic(image2);
-
-        } else if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() > 0) {
-            liste_cases.get(piece.getX()).get(piece.getY() - 1).setGraphic(image);
-
-        } else {
-            if (piece.getX() < 8 && piece.getY() > 1 && liste_cases.get(piece.getX()).get(piece.getY() - 2).getValue() > 0) {
-                liste_cases.get(piece.getX()).get(piece.getY() - 2).setStyle(red);
-            }
-            if (piece.getX() < 8 && piece.getY() < 8 && liste_cases.get(piece.getX()).get(piece.getY()).getValue() > 0) {
-                liste_cases.get(piece.getX()).get(piece.getY()).setStyle(red);
-            }
-        }
-    }
-
-    /**
-     * It resets the pawn's moves
-     *
-     * @param piece the piece that is being moved
-     * @param color the color of the pawn
-     */
-    private void resetBlackPawnMoves(Case piece, Background color) {
-        if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() == 0) {
-            liste_cases.get(piece.getX()).get(piece.getY() - 1).setGraphic(null);
-            liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setGraphic(null);
-
-        } else if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() != 0) {
-            liste_cases.get(piece.getX()).get(piece.getY() - 1).setGraphic(null);
-
-        } else {
-            if (piece.getX() < 8 && piece.getY() > 1 && liste_cases.get(piece.getX()).get(piece.getY() - 2).getValue() > 0) {
-                liste_cases.get(piece.getX()).get(piece.getY() - 2).setStyle(color.toString());
-            }
-            if (piece.getX() < 8 && piece.getY() < 8 && liste_cases.get(piece.getX()).get(piece.getY()).getValue() > 0) {
-                liste_cases.get(piece.getX()).get(piece.getY()).setStyle(color.toString());
-            }
-        }
-    }
-
-    private void blackRookMoves(Case piece) {
-        // Colonne Bas
-        this.blackRookMoveDown(piece);
-
-        // Ligne droite
-        this.blackRookMoveRight(piece);
-
-        // Colonne Haut
-        this.blackRookMoveUp(piece);
-
-        // Ligne Gauche
-        this.blackRookMoveLeft(piece);
-    }
-
-    private void blackRookMoveDown(Case piece) {
-        int colonne = 0;
-        boolean adversaire = false;
-        while (piece.getX() + colonne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setGraphic(newImage);
-                colonne++;
-            }
-        }
-    }
-
-    private void blackRookMoveUp(Case piece) {
-        int colonne = 1;
-        boolean adversaire = false;
-        while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setGraphic(newImage);
-                colonne++;
-            }
-        }
-    }
-
-    private void blackRookMoveRight(Case piece) {
-        int ligne = 0;
-        boolean adversaire = false;
-        while (piece.getY() + ligne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setGraphic(newImage);
-                ligne++;
-            }
-        }
-    }
-
-    private void blackRookMoveLeft(Case piece) {
-        int ligne = 1;
-        boolean adversaire = false;
-        while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setStyle(red);
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                ImageView newImage = new ImageView("file:./resources/dot.png");
-                newImage.setFitHeight(500 / (double) 8);
-                newImage.setFitWidth(500 / (double) 8);
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setGraphic(newImage);
-                ligne++;
-            }
-        }
-    }
-
-    private void resetBlackRookMoves(Case piece, Background color) {
-        // Colonne Bas
-        this.resetBlackRookMoveDown(piece, color);
-
-        // Ligne droite
-        this.resetBlackRookMoveRight(piece, color);
-
-        // Colonne Haut
-        this.resetBlackRookMoveUp(piece, color);
-
-        // Ligne Gauche
-        this.resetBlackRookMoveLeft(piece, color);
-    }
-
-    private void resetBlackRookMoveDown(Case piece, Background color) {
-        int colonne = 0;
-        boolean adversaire = false;
-        while (piece.getX() + colonne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setGraphic(null);
-                colonne++;
-            }
-        }
-    }
-
-    private void resetBlackRookMoveUp(Case piece, Background color) {
-        int colonne = 1;
-        boolean adversaire = false;
-        while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setGraphic(null);
-                colonne++;
-            }
-        }
-    }
-
-    private void resetBlackRookMoveRight(Case piece, Background color) {
-        int ligne = 0;
-        boolean adversaire = false;
-        while (piece.getY() + ligne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setGraphic(null);
-                ligne++;
-            }
-        }
-    }
-
-    private void resetBlackRookMoveLeft(Case piece, Background color) {
-        int ligne = 1;
-        boolean adversaire = false;
-        while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() > 0) { // Adversaire
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setStyle(color.toString());
-                adversaire = true;
-            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() < 0) { // Allié
-                adversaire = true;
-            } else { // Libre
-                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setGraphic(null);
-                ligne++;
-            }
-        }
-    }
-
-    private void blackKnightMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void resetBlackKnightMoves(Case piece, Background color) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
