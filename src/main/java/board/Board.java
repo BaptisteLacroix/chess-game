@@ -2,6 +2,7 @@ package board;
 
 import java.util.ArrayList;
 
+import pieces.Bishop;
 import pieces.Knight;
 import pieces.Pawn;
 import javafx.geometry.Pos;
@@ -33,7 +34,6 @@ public class Board extends VBox {
     private int xDetected;
     private int yDetected;
     private static final String yellow = "-fx-background-color: yellow;";
-    private static final String red = "-fx-background-color: red;";
 
     // It creates a board with the pieces in their initial positions
     public Board(int witdh, int height) {
@@ -233,11 +233,9 @@ public class Board extends VBox {
         Background color = c.getBackground();
         c.setOnMouseEntered(event -> {
             c.setStyle(yellow);
-            // this.blackPawnMoves(c);
         });
         c.setOnMouseExited(event -> {
             c.setStyle(color.toString());
-            // this.resetBlackPawnMoves(c, color);
         });
     }
 
@@ -368,7 +366,7 @@ public class Board extends VBox {
                 }
                 break;
             case 3:
-                throw new UnsupportedOperationException("3 : Not supported yet.");
+                this.setWhiteDropPiece(piece, db);
             case 5:
                 if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
                     boolean isValid = true;
@@ -460,7 +458,7 @@ public class Board extends VBox {
                 }
                 break;
             case -3:
-                throw new UnsupportedOperationException("-3 : Not supported yet.");
+                this.setBlackDropPiece(piece, db);
             case -5:
                 if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
                     boolean isValid = true;
@@ -694,11 +692,11 @@ public class Board extends VBox {
             case -3:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.blackBishopMoves(piece);
+                    Bishop.blackBishopMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetBlackBishopMoves(piece, color);
+                    Bishop.resetBlackBishopMoves(this.liste_cases, piece, color);
                 });
                 break;
             case -5:
@@ -754,11 +752,11 @@ public class Board extends VBox {
             case 3:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.whiteBishopMoves(piece);
+                    Bishop.whiteBishopMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetWhiteBishopMoves(piece, color);
+                    Bishop.resetWhiteBishopMoves(this.liste_cases, piece, color);
                 });
                 break;
             case 5:
@@ -795,14 +793,6 @@ public class Board extends VBox {
         }
     }
 
-    private void whiteBishopMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void resetWhiteBishopMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     private void whiteQueenMoves(Case piece) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -819,13 +809,6 @@ public class Board extends VBox {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void blackBishopMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void resetBlackBishopMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     private void blackQueenMoves(Case piece) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
