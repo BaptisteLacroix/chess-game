@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pawn {
     private static final String red = "-fx-background-color: red;";
@@ -16,7 +17,7 @@ public class Pawn {
      *
      * @param piece the piece that is being moved
      */
-    public static void whitePawnMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    public static void whitePawnMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
             image.setFitHeight(500 / (double) 8);
             image.setFitWidth(500 / (double) 8);
@@ -44,7 +45,7 @@ public class Pawn {
      * @param piece the piece we want to reset the moves for
      * @param color the color of the piece
      */
-    public static void resetWhitePawnMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    public static void resetWhitePawnMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
             image.setFitHeight(500 / (double) 8);
             image.setFitWidth(500 / (double) 8);
@@ -71,14 +72,19 @@ public class Pawn {
      *
      * @param piece the piece that is being moved
      */
-    public static void blackPawnMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    public static void blackPawnMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() == 0) {
+            image.setFitHeight(500 / (double) 8);
+            image.setFitWidth(500 / (double) 8);
+            image2.setFitHeight(500 / (double) 8);
+            image2.setFitWidth(500 / (double) 8);
             liste_cases.get(piece.getX()).get(piece.getY() - 1).setGraphic(image);
             liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setGraphic(image2);
 
         } else if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() > 0) {
+            image.setFitHeight(500 / (double) 8);
+            image.setFitWidth(500 / (double) 8);
             liste_cases.get(piece.getX()).get(piece.getY() - 1).setGraphic(image);
-
         } else {
             if (piece.getX() < 8 && piece.getY() > 1 && liste_cases.get(piece.getX()).get(piece.getY() - 2).getValue() > 0) {
                 liste_cases.get(piece.getX()).get(piece.getY() - 2).setStyle(red);
@@ -95,7 +101,7 @@ public class Pawn {
      * @param piece the piece that is being moved
      * @param color the color of the pawn
      */
-    public static void resetBlackPawnMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    public static void resetBlackPawnMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getX() < 7 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() == 0) {
             liste_cases.get(piece.getX()).get(piece.getY() - 1).setGraphic(null);
             liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).setGraphic(null);

@@ -15,7 +15,7 @@ public class Rook {
      *
      * @param piece the piece we want to move
      */
-    public static void whiteRookMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    public static void whiteRookMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Colonne Bas
         whiteRookMoveDown(liste_cases, piece);
 
@@ -35,7 +35,7 @@ public class Rook {
      * @param piece the piece we want to reset the moves for
      * @param color the color of the piece
      */
-    public static void resetWhiteRookMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    public static void resetWhiteRookMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // Colonne Bas
         resetWhiteRookMoveDown(liste_cases, piece, color);
 
@@ -54,7 +54,7 @@ public class Rook {
      *
      * @param piece the piece that is being moved
      */
-    private static void whiteRookMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteRookMoveDown(List<ArrayList<Case>> liste_cases, Case piece) {
         int colonne = 0;
         boolean adversaire = false;
         while (piece.getX() + colonne < 8 && !adversaire) {
@@ -78,7 +78,7 @@ public class Rook {
      *
      * @param piece the piece that is being moved
      */
-    private static void whiteRookMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteRookMoveUp(List<ArrayList<Case>> liste_cases, Case piece) {
         int colonne = 1;
         boolean adversaire = false;
         while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
@@ -102,7 +102,7 @@ public class Rook {
      *
      * @param piece the piece that is selected
      */
-    private static void whiteRookMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteRookMoveRight(List<ArrayList<Case>> liste_cases, Case piece) {
         int ligne = 0;
         boolean adversaire = false;
         while (piece.getY() + ligne < 8 && !adversaire) {
@@ -126,7 +126,7 @@ public class Rook {
      *
      * @param piece the piece that is selected
      */
-    private static void whiteRookMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteRookMoveLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         int ligne = 1;
         boolean adversaire = false;
         while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
@@ -151,7 +151,7 @@ public class Rook {
      * @param piece the case where the piece is
      * @param color the color of the piece
      */
-    private static void resetWhiteRookMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteRookMoveDown(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int colonne = 0;
         boolean adversaire = false;
         while (piece.getX() + colonne < 8 && !adversaire) {
@@ -173,7 +173,7 @@ public class Rook {
      * @param piece the case where the piece is
      * @param color the color of the piece
      */
-    private static void resetWhiteRookMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteRookMoveUp(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int colonne = 1;
         boolean adversaire = false;
         while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
@@ -195,7 +195,7 @@ public class Rook {
      * @param piece the case where the piece is
      * @param color the color of the piece
      */
-    private static void resetWhiteRookMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteRookMoveRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int ligne = 0;
         boolean adversaire = false;
         while (piece.getY() + ligne < 8 && !adversaire) {
@@ -217,7 +217,7 @@ public class Rook {
      * @param piece the case where the piece is
      * @param color the color of the piece
      */
-    private static void resetWhiteRookMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteRookMoveLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int ligne = 1;
         boolean adversaire = false;
         while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
@@ -234,7 +234,7 @@ public class Rook {
     }
 
 
-    public static void blackRookMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    public static void blackRookMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Colonne Bas
         blackRookMoveDown(liste_cases, piece);
 
@@ -248,7 +248,7 @@ public class Rook {
         blackRookMoveLeft(liste_cases, piece);
     }
 
-    private static void blackRookMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackRookMoveDown(List<ArrayList<Case>> liste_cases, Case piece) {
         int colonne = 0;
         boolean adversaire = false;
         while (piece.getX() + colonne < 8 && !adversaire) {
@@ -267,7 +267,7 @@ public class Rook {
         }
     }
 
-    private static void blackRookMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackRookMoveUp(List<ArrayList<Case>> liste_cases, Case piece) {
         int colonne = 1;
         boolean adversaire = false;
         while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
@@ -286,7 +286,7 @@ public class Rook {
         }
     }
 
-    private static void blackRookMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackRookMoveRight(List<ArrayList<Case>> liste_cases, Case piece) {
         int ligne = 0;
         boolean adversaire = false;
         while (piece.getY() + ligne < 8 && !adversaire) {
@@ -305,7 +305,7 @@ public class Rook {
         }
     }
 
-    private static void blackRookMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackRookMoveLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         int ligne = 1;
         boolean adversaire = false;
         while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
@@ -324,7 +324,7 @@ public class Rook {
         }
     }
 
-    public static void resetBlackRookMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    public static void resetBlackRookMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // Colonne Bas
         resetBlackRookMoveDown(liste_cases, piece, color);
 
@@ -338,7 +338,7 @@ public class Rook {
         resetBlackRookMoveLeft(liste_cases, piece, color);
     }
 
-    private static void resetBlackRookMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackRookMoveDown(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int colonne = 0;
         boolean adversaire = false;
         while (piece.getX() + colonne < 8 && !adversaire) {
@@ -354,7 +354,7 @@ public class Rook {
         }
     }
 
-    private static void resetBlackRookMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackRookMoveUp(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int colonne = 1;
         boolean adversaire = false;
         while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
@@ -370,7 +370,7 @@ public class Rook {
         }
     }
 
-    private static void resetBlackRookMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackRookMoveRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int ligne = 0;
         boolean adversaire = false;
         while (piece.getY() + ligne < 8 && !adversaire) {
@@ -386,7 +386,7 @@ public class Rook {
         }
     }
 
-    private static void resetBlackRookMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackRookMoveLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         int ligne = 1;
         boolean adversaire = false;
         while (piece.getY() - 1 - ligne >= 0 && !adversaire) {

@@ -5,11 +5,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Knight {
     private static final String red = "-fx-background-color: red;";
 
-    public static void whiteKnightMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    public static void whiteKnightMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Haut Droite et Gauche
         whiteKnightMoveUp(liste_cases, piece);
 
@@ -23,7 +24,7 @@ public class Knight {
         whiteKnightMoveRight(liste_cases, piece);
     }
 
-    private static void whiteKnightMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteKnightMoveUp(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() > 2 && piece.getY() > 1) { // Case gauche possible
             if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
                 // case gauche ennemie
@@ -52,7 +53,7 @@ public class Knight {
         }
     }
 
-    private static void whiteKnightMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteKnightMoveLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getY() > 2 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
                 // case haut ennemie
@@ -81,7 +82,7 @@ public class Knight {
         }
     }
 
-    private static void whiteKnightMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteKnightMoveRight(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getY() < 7 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
                 // case haut ennemie
@@ -110,7 +111,7 @@ public class Knight {
         }
     }
 
-    private static void whiteKnightMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void whiteKnightMoveDown(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() < 7 && piece.getY() > 1) {
             if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0) {
                 // case gauche ennemie
@@ -139,7 +140,7 @@ public class Knight {
         }
     }
 
-    public static void resetWhiteKnightMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    public static void resetWhiteKnightMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // Haut Droite et Gauche
         resetWhiteKnightMoveUp(liste_cases, piece, color);
 
@@ -153,7 +154,7 @@ public class Knight {
         resetWhiteKnightMoveRight(liste_cases, piece, color);
     }
 
-    private static void resetWhiteKnightMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteKnightMoveUp(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getX() > 2 && piece.getY() > 1) { // Case gauche possible
             if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
                 // case gauche ennemie
@@ -176,7 +177,7 @@ public class Knight {
         }
     }
 
-    private static void resetWhiteKnightMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteKnightMoveLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getY() > 2 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
                 // case haut ennemie
@@ -199,7 +200,7 @@ public class Knight {
         }
     }
 
-    private static void resetWhiteKnightMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteKnightMoveRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getY() < 7 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
                 // case haut ennemie
@@ -222,7 +223,7 @@ public class Knight {
         }
     }
 
-    private static void resetWhiteKnightMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetWhiteKnightMoveDown(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getX() < 7 && piece.getY() > 1) { // Case gauche possible
             if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0) {
                 // case gauche ennemie
@@ -245,7 +246,7 @@ public class Knight {
         }
     }
 
-    public static void blackKnightMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    public static void blackKnightMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Haut Droite et Gauche
         blackKnightMoveUp(liste_cases, piece);
 
@@ -259,7 +260,7 @@ public class Knight {
         blackKnightMoveLeft(liste_cases, piece);
     }
 
-    private static void blackKnightMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackKnightMoveUp(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() > 2 && piece.getY() > 1) { // Case gauche possible
             if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
@@ -288,7 +289,7 @@ public class Knight {
         }
     }
 
-    private static void blackKnightMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackKnightMoveLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getY() > 2 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
                 // case haut ennemie
@@ -317,7 +318,7 @@ public class Knight {
         }
     }
 
-    private static void blackKnightMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackKnightMoveRight(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getY() < 7 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
                 // case haut ennemie
@@ -346,7 +347,7 @@ public class Knight {
         }
     }
 
-    private static void blackKnightMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece) {
+    private static void blackKnightMoveDown(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() < 7 && piece.getY() > 1) {
             if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
@@ -375,7 +376,7 @@ public class Knight {
         }
     }
 
-    public static void resetBlackKnightMoves(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    public static void resetBlackKnightMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // Haut Droite et Gauche
         resetBlackKnightMoveUp(liste_cases, piece, color);
 
@@ -389,7 +390,7 @@ public class Knight {
         resetBlackKnightMoveLeft(liste_cases, piece, color);
     }
 
-    private static void resetBlackKnightMoveUp(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackKnightMoveUp(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getX() > 2 && piece.getY() > 1) { // Case gauche possible
             if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
@@ -412,7 +413,7 @@ public class Knight {
         }
     }
 
-    private static void resetBlackKnightMoveLeft(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackKnightMoveLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getY() > 2 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
                 // case haut ennemie
@@ -435,7 +436,7 @@ public class Knight {
         }
     }
 
-    private static void resetBlackKnightMoveRight(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackKnightMoveRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getY() < 7 && piece.getX() > 1) { // Case haut possible
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
                 // case haut ennemie
@@ -458,7 +459,7 @@ public class Knight {
         }
     }
 
-    private static void resetBlackKnightMoveDown(ArrayList<ArrayList<Case>> liste_cases, Case piece, Background color) {
+    private static void resetBlackKnightMoveDown(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         if (piece.getX() < 7 && piece.getY() > 1) { // Case gauche possible
             if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
