@@ -71,7 +71,7 @@ public class Bishop {
         // y = y - n
         int n = 1;
         boolean adversaire = false;
-        while (!adversaire && piece.getX() + n < 8 && piece.getY() - n > 0) {
+        while (!adversaire && piece.getX() + n <= 8 && piece.getY() - n > 0) {
             if (liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).getValue() < 0) {
                 liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).setStyle(red);
                 adversaire = true;
@@ -163,7 +163,7 @@ public class Bishop {
         // y = y - n
         int n = 1;
         boolean adversaire = false;
-        while (!adversaire && piece.getX() + n < 8 && piece.getY() - n > 0) {
+        while (!adversaire && piece.getX() + n <= 8 && piece.getY() - n > 0) {
             if (liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).getValue() < 0) {
                 liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).setStyle(color.toString());
                 adversaire = true;

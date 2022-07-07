@@ -51,6 +51,7 @@ public class Board extends VBox {
             }
         }
         print();
+        System.out.println("ALERTE: CHANGER DEPLACEMENT APRES PREMIER COUP DU PION (PAS DE DEPLACEMENTS DEUX CASES)");
     }
 
     /**
@@ -366,7 +367,69 @@ public class Board extends VBox {
                 }
                 break;
             case 3:
-                this.setWhiteDropPiece(piece, db);
+                if (db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetY() && db.getDragViewOffsetY() == source.getY() - db.getDragViewOffsetY() ||
+                        db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetX() && db.getDragViewOffsetY() == source.getY() + db.getDragViewOffsetX() ||
+                        db.getDragViewOffsetY() == (source.getY() - (db.getDragViewOffsetX() - source.getX())) ||
+                        db.getDragViewOffsetX() == (source.getX() + (db.getDragViewOffsetY() - source.getY()))) {
+                    if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() < source.getY()) { // Haut Gauche
+                        boolean isValid = true;
+                        int n = 1;
+                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() < 0) &&
+                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setWhiteDropPiece(piece, db);
+                        break;
+                    } else if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() > source.getY()) { // Haut Droite
+                        boolean isValid = true;
+                        int n = 1;
+                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) < db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() < 0) &&
+                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setWhiteDropPiece(piece, db);
+                        break;
+                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() < source.getY()) { // Bas Gauche
+                        boolean isValid = true;
+                        int n = 0;
+                        while (isValid && (source.getX() - n) < db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() < 0) &&
+                                            (source.getX() + n + 1 != db.getDragViewOffsetX() && source.getY() - n - 1 != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setWhiteDropPiece(piece, db);
+                        break;
+                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() > source.getY()) { // Bas Droite
+                        boolean isValid = true;
+                        int n = 0;
+                        while (isValid && (source.getX() + n) < db.getDragViewOffsetX() && (source.getY() + n) < db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() > 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0) &&
+                                            (source.getX() - n + 1 != db.getDragViewOffsetX() && source.getY() - n + 1 != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setWhiteDropPiece(piece, db);
+                        break;
+                    }
+                }
+                break;
             case 5:
                 if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
                     boolean isValid = true;
@@ -394,7 +457,6 @@ public class Board extends VBox {
                     if (isValid) {
                         this.setWhiteDropPiece(piece, db);
                     }
-
                 } else if (db.getDragViewOffsetY() == source.getY()) { // Haut Bas
                     boolean isValid = true;
                     int colonne = 0;
@@ -458,7 +520,72 @@ public class Board extends VBox {
                 }
                 break;
             case -3:
-                this.setBlackDropPiece(piece, db);
+                if (db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetY() && db.getDragViewOffsetY() == source.getY() - db.getDragViewOffsetY() ||
+                        db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetX() && db.getDragViewOffsetY() == source.getY() + db.getDragViewOffsetX() ||
+                        db.getDragViewOffsetY() == (source.getY() - (db.getDragViewOffsetX() - source.getX())) ||
+                        db.getDragViewOffsetX() == (source.getX() + (db.getDragViewOffsetY() - source.getY()))) {
+                    if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() < source.getY()) { // Haut Gauche
+                        boolean isValid = true;
+                        int n = 1;
+                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() < 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() > 0) &&
+                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setBlackDropPiece(piece, db);
+                        break;
+
+                    } else if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() > source.getY()) { // Haut Droite
+                        boolean isValid = true;
+                        int n = 1;
+                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) < db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() < 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() > 0) &&
+                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setBlackDropPiece(piece, db);
+                        break;
+
+                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() < source.getY()) { // Bas Gauche
+                        boolean isValid = true;
+                        int n = 0;
+                        while (isValid && (source.getX() - n) < db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() < 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() > 0) &&
+                                            (source.getX() + n + 1 != db.getDragViewOffsetX() && source.getY() - n - 1 != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setBlackDropPiece(piece, db);
+                        break;
+
+                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() > source.getY()) { // Bas Droite
+                        boolean isValid = true;
+                        int n = 0;
+                        while (isValid && (source.getX() + n) < db.getDragViewOffsetX() && (source.getY() + n) < db.getDragViewOffsetY()) {
+                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0 ||
+                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() > 0) &&
+                                            (source.getX() - n + 1 != db.getDragViewOffsetX() && source.getY() - n + 1 != db.getDragViewOffsetY())) {
+                                isValid = false;
+                            }
+                            n++;
+                        }
+                        if (isValid)
+                            this.setBlackDropPiece(piece, db);
+                        break;
+                    }
+                }
+                break;
             case -5:
                 if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
                     boolean isValid = true;
