@@ -29,7 +29,6 @@ public class Pawn {
      * @param piece the piece that is being moved
      */
     public static void whitePawnMoves(List<ArrayList<Case>> liste_cases, Case piece) {
-
         if (piece.getX() > 2 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
             image.setFitHeight(500 / (double) 8);
             image.setFitWidth(500 / (double) 8);

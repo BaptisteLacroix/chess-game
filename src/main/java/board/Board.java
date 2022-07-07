@@ -363,7 +363,9 @@ public class Board extends VBox {
                     this.setWhiteDropPiece(piece, db);
                 break;
             case 800: // King
-                throw new UnsupportedOperationException("800 : Not supported yet.");
+                if (King.checkTheWhiteMove(db, source, piece))
+                    this.setWhiteDropPiece(piece, db);
+                break;
             default: // Error
                 throw new UnsupportedOperationException("Default : Not supported yet.");
         }
@@ -658,24 +660,15 @@ public class Board extends VBox {
             default:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.whiteKingMoves(piece);
+                    King.whiteKingMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetWhiteKingMoves(piece, color);
+                    King.resetWhiteKingMoves(this.liste_cases, piece, color);
                 });
                 break;
 
         }
-    }
-
-
-    private void whiteKingMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void resetWhiteKingMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void blackKingMoves(Case piece) {
