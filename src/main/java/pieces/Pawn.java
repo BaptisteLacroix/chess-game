@@ -10,11 +10,34 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to create a Pawn object that is used to display the pieces on the board.
+ *
+ * @author Lacroix Baptiste
+ */
 public class Pawn {
+    /**
+     * The red color value
+     */
     private static final String red = "-fx-background-color: red;";
+    /**
+     * An Dot ImageView object
+     */
     private static final ImageView image = new ImageView("file:./resources/dot.png");
+    /**
+     * An Dot ImageView object
+     */
     private static final ImageView image2 = new ImageView("file:./resources/dot.png");
 
+    /**
+     *  It checks if the move is valid for the white player
+     *
+     * @param db The Dragboard object that contains the data being dragged.
+     * @param vBox The VBox that contains the HBoxes that contain the Cases.
+     * @param source the case where the piece is located
+     * @param piece The piece that is being dragged
+     * @return A boolean value.
+     */
     public static boolean checkTheWhiteMove(Dragboard db, VBox vBox, Case source, Case piece) {
         return (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0)
                 || ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) &&
@@ -78,6 +101,15 @@ public class Pawn {
         }
     }
 
+    /**
+     * It checks if the move is valid for the black player
+     *
+     * @param db The Dragboard object
+     * @param vBox the VBox that contains the HBoxes that contain the Cases
+     * @param source the piece that is being moved
+     * @param piece the piece that is being dragged
+     * @return A boolean value.
+     */
     public static boolean checkTheBlackMove(Dragboard db, VBox vBox, Case source, Case piece) {
         return ((db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0)
                 || (piece.getX() < 8 && (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) &&

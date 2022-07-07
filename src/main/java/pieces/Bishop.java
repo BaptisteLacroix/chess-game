@@ -10,9 +10,25 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to create a bishop object that is used to display the pieces on the board.
+ *
+ * @author Lacroix Baptiste
+ */
 public class Bishop {
+    /**
+     * the red color value
+     */
     private static final String red = "-fx-background-color: red;";
 
+    /**
+     * It checks if the move is valid for the white player
+     *
+     * @param db The Dragboard object
+     * @param vbox the VBox containing the HBoxes containing the Cases
+     * @param source the case from which the piece is moved
+     * @return A boolean value.
+     */
     public static Boolean checkTheWhiteMove(Dragboard db, VBox vbox, Case source) {
         if (db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetY() && db.getDragViewOffsetY() == source.getY() - db.getDragViewOffsetY() ||
                 db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetX() && db.getDragViewOffsetY() == source.getY() + db.getDragViewOffsetX() ||
@@ -71,6 +87,12 @@ public class Bishop {
         return false;
     }
 
+    /**
+     * It highlights the valid moves for the white player
+     *
+     * @param liste_cases The list of all the cases on the board.
+     * @param piece the piece we want to move
+     */
     public static void whiteBishopMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Haut Droite et Gauche
         whiteBishopMoveUpLeft(liste_cases, piece);
@@ -85,6 +107,12 @@ public class Bishop {
         whiteBishopMoveDownRight(liste_cases, piece);
     }
 
+    /**
+     * It checks if the bishop can move up and left, and if it can, It highlights the valid moves for the white player
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     */
     private static void whiteBishopMoveUpLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x - n
         // y = y - n
@@ -106,6 +134,12 @@ public class Bishop {
         }
     }
 
+    /**
+     * It checks if the bishop can move up and right, and if it can, It highlights the valid moves for the white player
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     */
     private static void whiteBishopMoveUpRight(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x - n
         // y = y + n
@@ -127,6 +161,12 @@ public class Bishop {
         }
     }
 
+    /**
+     * It checks if the bishop can move down and left, and if it can, It highlights the valid moves for the white player
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     */
     private static void whiteBishopMoveDownLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x + n
         // y = y - n
@@ -148,6 +188,12 @@ public class Bishop {
         }
     }
 
+    /**
+     * It checks if the bishop can move down and right, and if it can, It highlights the valid moves for the white player
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     */
     private static void whiteBishopMoveDownRight(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x + n
         // y = y + n
@@ -169,6 +215,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the highlights' bishop's moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     * @param color the color of the piece
+     */
     public static void resetWhiteBishopMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // Haut Droite et Gauche
         resetWhiteBishopMoveUpLeft(liste_cases, piece, color);
@@ -183,6 +236,13 @@ public class Bishop {
         resetWhiteBishopMoveDownRight(liste_cases, piece, color);
     }
 
+    /**
+     * It resets the highlights' bishop's moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetWhiteBishopMoveUpLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x - n
         // y = y - n
@@ -201,6 +261,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the highlights' bishop's moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetWhiteBishopMoveUpRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x - n
         // y = y + n
@@ -219,6 +286,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the highlights' bishop's moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetWhiteBishopMoveDownLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x + n
         // y = y - n
@@ -237,6 +311,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the highlights' bishop's moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetWhiteBishopMoveDownRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x + n
         // y = y + n
@@ -255,6 +336,14 @@ public class Bishop {
         }
     }
 
+    /**
+     * It checks if the move is valid for the black player
+     *
+     * @param db The Dragboard object
+     * @param vBox the VBox containing the HBoxes containing the Cases
+     * @param source the case from which the piece is moved
+     * @return A boolean value.
+     */
     public static boolean checkTheBlackMove(Dragboard db, VBox vBox, Case source) {
         if (db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetY() && db.getDragViewOffsetY() == source.getY() - db.getDragViewOffsetY() ||
                 db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetX() && db.getDragViewOffsetY() == source.getY() + db.getDragViewOffsetX() ||
@@ -313,6 +402,12 @@ public class Bishop {
         return false;
     }
 
+    /**
+     * It highlights the valid moves for the black player
+     *
+     * @param liste_cases The list of all the cases on the board.
+     * @param piece the piece we want to move
+     */
     public static void blackBishopMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Haut Droite et Gauche
         blackBishopMoveUpLeft(liste_cases, piece);
@@ -327,6 +422,12 @@ public class Bishop {
         blackBishopMoveDownRight(liste_cases, piece);
     }
 
+    /**
+     * It checks if the black bishop can move up and left, and if it can, it highlights the possible moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     */
     private static void blackBishopMoveUpLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x - n
         // y = y - n
@@ -348,6 +449,12 @@ public class Bishop {
         }
     }
 
+    /**
+     * It checks if the black bishop can move up and right, and if it can, it highlights the possible moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     */
     private static void blackBishopMoveUpRight(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x - n
         // y = y + n
@@ -369,6 +476,12 @@ public class Bishop {
         }
     }
 
+    /**
+     * It checks if the black bishop can move down and left, and if it can, it highlights the possible moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     */
     private static void blackBishopMoveDownLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x + n
         // y = y - n
@@ -390,6 +503,12 @@ public class Bishop {
         }
     }
 
+    /**
+     * It checks if the bishop can move down and right, and if it can, it highlights the possible moves
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     */
     private static void blackBishopMoveDownRight(List<ArrayList<Case>> liste_cases, Case piece) {
         // x = x + n
         // y = y + n
@@ -411,6 +530,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the moves of the black bishop
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece we want to move
+     * @param color the color of the piece
+     */
     public static void resetBlackBishopMoves(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // Haut Droite et Gauche
         resetBlackBishopMoveUpLeft(liste_cases, piece, color);
@@ -425,6 +551,13 @@ public class Bishop {
         resetBlackBishopMoveDownRight(liste_cases, piece, color);
     }
 
+    /**
+     * It resets the moves of the black bishop
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetBlackBishopMoveUpLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x - n
         // y = y - n
@@ -443,6 +576,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the moves of the black bishop
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetBlackBishopMoveUpRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x - n
         // y = y + n
@@ -461,6 +601,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the moves of the black bishop
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetBlackBishopMoveDownLeft(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x + n
         // y = y - n
@@ -479,6 +626,13 @@ public class Bishop {
         }
     }
 
+    /**
+     * It resets the moves of the black bishop
+     *
+     * @param liste_cases the list of all the cases of the board
+     * @param piece the piece that is being moved
+     * @param color the color of the piece
+     */
     private static void resetBlackBishopMoveDownRight(List<ArrayList<Case>> liste_cases, Case piece, Background color) {
         // x = x + n
         // y = y + n

@@ -8,8 +8,19 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import board.Board;
 
+/**
+ * This class is used to create a fenetre object that is used to display the board and the cards on it.
+ *
+ * @author Lacroix Baptiste
+ */
 public class Fenetre extends Application {
 
+    /**
+     * It creates a window, sets its title, size, and background color, then creates a board and puts it in the center of
+     * the window
+     *
+     * @param primaryStage The stage is the window that will be displayed.
+     */
     public void start(Stage primaryStage) throws Exception {
         // construction du stage
         primaryStage.setTitle("Chess Game");
@@ -29,6 +40,9 @@ public class Fenetre extends Application {
         primaryStage.show();
     }
 
+    /**
+     * It launches the application
+     */
     public static void lancement(String[] args) {
         Application.launch(args);
     }
