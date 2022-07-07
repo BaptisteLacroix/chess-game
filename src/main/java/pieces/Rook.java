@@ -2,13 +2,69 @@ package pieces;
 
 import board.Case;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rook {
     private static final String red = "-fx-background-color: red;";
+
+    public static boolean checkTheWhiteMove(Dragboard db, VBox vBox, Case source) {
+        if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
+            boolean isValid = true;
+            int ligne = 0;
+            if (db.getDragViewOffsetY() > source.getY()) {
+                while (isValid && (source.getY() + ligne) < db.getDragViewOffsetY()) { // Droite
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() > 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() < 0 &&
+                                    (source.getY() + ligne + 1) != db.getDragViewOffsetY())) {
+                        isValid = false;
+                    }
+                    ligne++;
+                }
+            } else {
+                ligne = 1;
+                while (isValid && (source.getY() - ligne) > db.getDragViewOffsetY()) { // Gauche
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() > 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() < 0 &&
+                                    (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
+                        isValid = false;
+                    }
+                    ligne++;
+                }
+            }
+            return isValid;
+        } else if (db.getDragViewOffsetY() == source.getY()) { // Haut Bas
+            boolean isValid = true;
+            int colonne = 0;
+            if (db.getDragViewOffsetX() > source.getX()) {
+                while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
+                                    (source.getX() + colonne + 1) != db.getDragViewOffsetX())) {
+                        isValid = false;
+                    }
+                    colonne++;
+                }
+            } else {
+                colonne = 1;
+                while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
+                                    (source.getX() - colonne + 1) != db.getDragViewOffsetX())) {
+                        isValid = false;
+                    }
+                    colonne++;
+                }
+            }
+            return isValid;
+        }
+        return false;
+    }
 
     /**
      * This function will check all the possible moves of a white rook.
@@ -233,6 +289,60 @@ public class Rook {
         }
     }
 
+
+    public static boolean checkTheBlackMove(Dragboard db, VBox vBox, Case source) {
+        if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
+            boolean isValid = true;
+            int ligne = 0;
+            if (db.getDragViewOffsetY() > source.getY()) {
+                while (isValid && (source.getY() + ligne) < db.getDragViewOffsetY()) { // Droite
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() < 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() > 0 &&
+                                    (source.getY() + ligne + 1) != db.getDragViewOffsetY())) {
+                        isValid = false;
+                    }
+                    ligne++;
+                }
+            } else {
+                ligne = 1;
+                while (isValid && (source.getY() - ligne) > db.getDragViewOffsetY()) { // Gauche
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() < 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() > 0 &&
+                                    (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
+                        isValid = false;
+                    }
+                    ligne++;
+                }
+            }
+            return isValid;
+
+        } else if (db.getDragViewOffsetY() == source.getY()) { // Haut Bas
+            boolean isValid = true;
+            int colonne = 0;
+            if (db.getDragViewOffsetX() > source.getX()) {
+                while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
+                                    (source.getX() + colonne + 1) != db.getDragViewOffsetX())) {
+                        isValid = false;
+                    }
+                    colonne++;
+                }
+            } else {
+                colonne = 1;
+                while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
+                    if (((Case) ((HBox) vBox.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
+                            (((Case) ((HBox) vBox.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
+                                    (source.getX() - colonne + 1) != db.getDragViewOffsetX())) {
+                        isValid = false;
+                    }
+                    colonne++;
+                }
+            }
+            return isValid;
+        }
+        return false;
+    }
 
     public static void blackRookMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Colonne Bas

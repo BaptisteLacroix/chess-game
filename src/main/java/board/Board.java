@@ -2,9 +2,7 @@ package board;
 
 import java.util.ArrayList;
 
-import pieces.Bishop;
-import pieces.Knight;
-import pieces.Pawn;
+import pieces.*;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +11,6 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
-import pieces.Rook;
 
 
 /**
@@ -345,151 +342,29 @@ public class Board extends VBox {
         db.setDragViewOffsetX(piece.getX());
         db.setDragViewOffsetY(piece.getY());
         switch (source.getValue()) {
-            case 1:
-                if ((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0)
-                        || ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) &&
-                        (((Case) ((HBox) this.getChildren().get(source.getX() - 2)).getChildren().get(source.getY() - 1)).getValue() == 0)) ||
-                        ((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 1 ||
-                                db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 1) && piece.getValue() < 0)) {
+            case 1: // Pawn
+                if (Pawn.checkTheWhiteMove(db, this, source, piece))
                     this.setWhiteDropPiece(piece, db);
-                }
                 break;
-            case 2:
-                if ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Haut Gauche
-                        (db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0) || // Haut Bas
-                        (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() <= 0) || // Gauche Haut
-                        (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() <= 0) || // Gauche Bas
-                        (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() <= 0) || // Droite haut
-                        (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() <= 0) || // Droite Bas
-                        (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Bas Gauche
-                        (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0)) /* Bas Droite */ {
+            case 2: // Rook
+                if (Knight.checkTheWhiteMove(db, source, piece))
                     this.setWhiteDropPiece(piece, db);
-                }
                 break;
-            case 3:
-                if (db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetY() && db.getDragViewOffsetY() == source.getY() - db.getDragViewOffsetY() ||
-                        db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetX() && db.getDragViewOffsetY() == source.getY() + db.getDragViewOffsetX() ||
-                        db.getDragViewOffsetY() == (source.getY() - (db.getDragViewOffsetX() - source.getX())) ||
-                        db.getDragViewOffsetX() == (source.getX() + (db.getDragViewOffsetY() - source.getY()))) {
-                    if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() < source.getY()) { // Haut Gauche
-                        boolean isValid = true;
-                        int n = 1;
-                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() < 0) &&
-                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setWhiteDropPiece(piece, db);
-                        break;
-                    } else if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() > source.getY()) { // Haut Droite
-                        boolean isValid = true;
-                        int n = 1;
-                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) < db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() < 0) &&
-                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setWhiteDropPiece(piece, db);
-                        break;
-                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() < source.getY()) { // Bas Gauche
-                        boolean isValid = true;
-                        int n = 0;
-                        while (isValid && (source.getX() - n) < db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() < 0) &&
-                                            (source.getX() + n + 1 != db.getDragViewOffsetX() && source.getY() - n - 1 != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setWhiteDropPiece(piece, db);
-                        break;
-                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() > source.getY()) { // Bas Droite
-                        boolean isValid = true;
-                        int n = 0;
-                        while (isValid && (source.getX() + n) < db.getDragViewOffsetX() && (source.getY() + n) < db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0) &&
-                                            (source.getX() - n + 1 != db.getDragViewOffsetX() && source.getY() - n + 1 != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setWhiteDropPiece(piece, db);
-                        break;
-                    }
-                }
+            case 3: // Knight
+                if (Bishop.checkTheWhiteMove(db, this, source))
+                    this.setWhiteDropPiece(piece, db);
                 break;
-            case 5:
-                if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
-                    boolean isValid = true;
-                    int ligne = 0;
-                    if (db.getDragViewOffsetY() > source.getY()) {
-                        while (isValid && (source.getY() + ligne) < db.getDragViewOffsetY()) { // Droite
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() < 0 &&
-                                            (source.getY() + ligne + 1) != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            ligne++;
-                        }
-                    } else {
-                        ligne = 1;
-                        while (isValid && (source.getY() - ligne) > db.getDragViewOffsetY()) { // Gauche
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() < 0 &&
-                                            (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            ligne++;
-                        }
-                    }
-                    if (isValid) {
-                        this.setWhiteDropPiece(piece, db);
-                    }
-                } else if (db.getDragViewOffsetY() == source.getY()) { // Haut Bas
-                    boolean isValid = true;
-                    int colonne = 0;
-                    if (db.getDragViewOffsetX() > source.getX()) {
-                        while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
-                                            (source.getX() + colonne + 1) != db.getDragViewOffsetX())) {
-                                isValid = false;
-                            }
-                            colonne++;
-                        }
-                    } else {
-                        colonne = 1;
-                        while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
-                                            (source.getX() - colonne + 1) != db.getDragViewOffsetX())) {
-                                isValid = false;
-                            }
-                            colonne++;
-                        }
-                    }
-                    if (isValid) {
-                        this.setWhiteDropPiece(piece, db);
-                    }
-                }
+            case 5: // Rook
+                if (Rook.checkTheWhiteMove(db, this, source))
+                    this.setWhiteDropPiece(piece, db);
                 break;
-            case 9:
-                throw new UnsupportedOperationException("9 : Not supported yet.");
-            case 800:
+            case 9: // Queen
+                if (Queen.checkTheWhiteMove(db, this, source))
+                    this.setWhiteDropPiece(piece, db);
+                break;
+            case 800: // King
                 throw new UnsupportedOperationException("800 : Not supported yet.");
-            default:
+            default: // Error
                 throw new UnsupportedOperationException("Default : Not supported yet.");
         }
     }
@@ -498,155 +373,29 @@ public class Board extends VBox {
         db.setDragViewOffsetX(piece.getX());
         db.setDragViewOffsetY(piece.getY());
         switch (source.getValue()) {
-            case -1:
-                if ((db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0)
-                        || (piece.getX() < 8 && (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) &&
-                        ((Case) ((HBox) this.getChildren().get(source.getX())).getChildren().get(source.getY() - 1)).getValue() == 0) ||
-                        (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 1 ||
-                                db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 1) && piece.getValue() > 0) {
+            case -1: // Pawn
+                if (Pawn.checkTheBlackMove(db, this, source, piece))
                     this.setBlackDropPiece(piece, db);
-                }
                 break;
-            case -2:
-                if ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0) || // Haut Gauche
-                        (db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0) || // Haut Bas
-                        (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0) || // Gauche Haut
-                        (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0) || // Gauche Bas
-                        (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0) || // Droite haut
-                        (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0) || // Droite Bas
-                        (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0) || // Bas Gauche
-                        (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0)) /* Bas Droite */ {
+            case -2: // Knight
+                if (Knight.checkTheBlackMove(db, source, piece))
                     this.setBlackDropPiece(piece, db);
-                }
                 break;
-            case -3:
-                if (db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetY() && db.getDragViewOffsetY() == source.getY() - db.getDragViewOffsetY() ||
-                        db.getDragViewOffsetX() == source.getX() - db.getDragViewOffsetX() && db.getDragViewOffsetY() == source.getY() + db.getDragViewOffsetX() ||
-                        db.getDragViewOffsetY() == (source.getY() - (db.getDragViewOffsetX() - source.getX())) ||
-                        db.getDragViewOffsetX() == (source.getX() + (db.getDragViewOffsetY() - source.getY()))) {
-                    if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() < source.getY()) { // Haut Gauche
-                        boolean isValid = true;
-                        int n = 1;
-                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() > 0) &&
-                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setBlackDropPiece(piece, db);
-                        break;
-
-                    } else if (db.getDragViewOffsetX() < source.getX() && db.getDragViewOffsetY() > source.getY()) { // Haut Droite
-                        boolean isValid = true;
-                        int n = 1;
-                        while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) < db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() > 0) &&
-                                            (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setBlackDropPiece(piece, db);
-                        break;
-
-                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() < source.getY()) { // Bas Gauche
-                        boolean isValid = true;
-                        int n = 0;
-                        while (isValid && (source.getX() - n) < db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() > 0) &&
-                                            (source.getX() + n + 1 != db.getDragViewOffsetX() && source.getY() - n - 1 != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setBlackDropPiece(piece, db);
-                        break;
-
-                    } else if (db.getDragViewOffsetX() > source.getX() && db.getDragViewOffsetY() > source.getY()) { // Bas Droite
-                        boolean isValid = true;
-                        int n = 0;
-                        while (isValid && (source.getX() + n) < db.getDragViewOffsetX() && (source.getY() + n) < db.getDragViewOffsetY()) {
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() > 0) &&
-                                            (source.getX() - n + 1 != db.getDragViewOffsetX() && source.getY() - n + 1 != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            n++;
-                        }
-                        if (isValid)
-                            this.setBlackDropPiece(piece, db);
-                        break;
-                    }
-                }
+            case -3: // Bishop
+                if (Bishop.checkTheBlackMove(db, this, source))
+                    this.setBlackDropPiece(piece, db);
                 break;
-            case -5:
-                if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
-                    boolean isValid = true;
-                    int ligne = 0;
-                    if (db.getDragViewOffsetY() > source.getY()) {
-                        while (isValid && (source.getY() + ligne) < db.getDragViewOffsetY()) { // Droite
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() > 0 &&
-                                            (source.getY() + ligne + 1) != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            ligne++;
-                        }
-                    } else {
-                        ligne = 1;
-                        while (isValid && (source.getY() - ligne) > db.getDragViewOffsetY()) { // Gauche
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() > 0 &&
-                                            (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
-                                isValid = false;
-                            }
-                            ligne++;
-                        }
-                    }
-                    if (isValid) {
-                        this.setBlackDropPiece(piece, db);
-                    }
-
-                } else if (db.getDragViewOffsetY() == source.getY()) { // Haut Bas
-                    boolean isValid = true;
-                    int colonne = 0;
-                    if (db.getDragViewOffsetX() > source.getX()) {
-                        while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
-                                            (source.getX() + colonne + 1) != db.getDragViewOffsetX())) {
-                                isValid = false;
-                            }
-                            colonne++;
-                        }
-                    } else {
-                        colonne = 1;
-                        while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
-                            if (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 ||
-                                    (((Case) ((HBox) this.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 &&
-                                            (source.getX() - colonne + 1) != db.getDragViewOffsetX())) {
-                                isValid = false;
-                            }
-                            colonne++;
-                        }
-                    }
-                    if (isValid) {
-                        this.setBlackDropPiece(piece, db);
-                    }
-                }
+            case -5: // Rook
+                if (Rook.checkTheBlackMove(db, this, source))
+                    this.setBlackDropPiece(piece, db);
                 break;
-            case -9:
-                throw new UnsupportedOperationException("-9 : Not supported yet.");
-            case -800:
+            case -9: // Queen
+                if (Queen.checkTheBlackMove(db, this, source))
+                    this.setBlackDropPiece(piece, db);
+                break;
+            case -800: // King
                 throw new UnsupportedOperationException("-800 : Not supported yet.");
-            default:
+            default: // Erreur
                 throw new UnsupportedOperationException("Default : Not supported yet.");
         }
     }
@@ -839,11 +588,11 @@ public class Board extends VBox {
             case -9:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.blackQueenMoves(piece);
+                    Queen.blackQueenMoves(liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetBlackQueenMoves(piece, color);
+                    Queen.resetBlackQueenMoves(liste_cases, piece, color);
                 });
                 break;
             case -800:
@@ -899,11 +648,11 @@ public class Board extends VBox {
             case 9:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.whiteQueenMoves(piece);
+                    Queen.whiteQueenMoves(liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetWhiteQueenMoves(piece, color);
+                    Queen.resetWhiteQueenMoves(liste_cases, piece, color);
                 });
                 break;
             default:
@@ -920,28 +669,12 @@ public class Board extends VBox {
         }
     }
 
-    private void whiteQueenMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void resetWhiteQueenMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     private void whiteKingMoves(Case piece) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void resetWhiteKingMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-    private void blackQueenMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void resetBlackQueenMoves(Case piece, Background color) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

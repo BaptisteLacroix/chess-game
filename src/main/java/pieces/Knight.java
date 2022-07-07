@@ -2,13 +2,27 @@ package pieces;
 
 import board.Case;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Knight {
     private static final String red = "-fx-background-color: red;";
+
+    public static Boolean checkTheWhiteMove(Dragboard db, Case source, Case piece) {
+        return ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Haut Gauche
+                (db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0) || // Haut Bas
+                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() <= 0) || // Gauche Haut
+                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() <= 0) || // Gauche Bas
+                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() <= 0) || // Droite haut
+                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() <= 0) || // Droite Bas
+                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Bas Gauche
+                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0)) /* Bas Droite */;
+    }
 
     public static void whiteKnightMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         // Haut Droite et Gauche
@@ -244,6 +258,17 @@ public class Knight {
                 liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(null); // Case droite libre
             }
         }
+    }
+
+    public static boolean checkTheBlackMove(Dragboard db, Case source, Case piece) {
+        return ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0) || // Haut Gauche
+                (db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0) || // Haut Bas
+                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0) || // Gauche Haut
+                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0) || // Gauche Bas
+                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0) || // Droite haut
+                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0) || // Droite Bas
+                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0) || // Bas Gauche
+                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0)) /* Bas Droite */;
     }
 
     public static void blackKnightMoves(List<ArrayList<Case>> liste_cases, Case piece) {
