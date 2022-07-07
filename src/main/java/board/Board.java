@@ -396,7 +396,9 @@ public class Board extends VBox {
                     this.setBlackDropPiece(piece, db);
                 break;
             case -800: // King
-                throw new UnsupportedOperationException("-800 : Not supported yet.");
+                if (King.checkTheBlackMove(db, source, piece))
+                    this.setBlackDropPiece(piece, db);
+                break;
             default: // Erreur
                 throw new UnsupportedOperationException("Default : Not supported yet.");
         }
@@ -590,21 +592,21 @@ public class Board extends VBox {
             case -9:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    Queen.blackQueenMoves(liste_cases, piece);
+                    Queen.blackQueenMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    Queen.resetBlackQueenMoves(liste_cases, piece, color);
+                    Queen.resetBlackQueenMoves(this.liste_cases, piece, color);
                 });
                 break;
             case -800:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    this.blackKingMoves(piece);
+                    King.blackKingMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    this.resetBlackKingMoves(piece, color);
+                    King.resetBlackKingMoves(this.liste_cases, piece, color);
                 });
                 break;
             case 1:
@@ -650,11 +652,11 @@ public class Board extends VBox {
             case 9:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
-                    Queen.whiteQueenMoves(liste_cases, piece);
+                    Queen.whiteQueenMoves(this.liste_cases, piece);
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
-                    Queen.resetWhiteQueenMoves(liste_cases, piece, color);
+                    Queen.resetWhiteQueenMoves(this.liste_cases, piece, color);
                 });
                 break;
             default:
@@ -669,14 +671,6 @@ public class Board extends VBox {
                 break;
 
         }
-    }
-
-    private void blackKingMoves(Case piece) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void resetBlackKingMoves(Case piece, Background color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
