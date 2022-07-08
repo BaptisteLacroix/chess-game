@@ -22,7 +22,7 @@ public class Board extends VBox {
     /**
      * It creates an ArrayList of ArrayList of Case objects.
      */
-    private ArrayList<ArrayList<Case>> liste_cases = new ArrayList<>();
+    private final ArrayList<ArrayList<Case>> liste_cases = new ArrayList<>();
     /**
      * It creates a new HBox object that will be used to add the cases to the board.
      */
@@ -55,7 +55,6 @@ public class Board extends VBox {
         this.setWidth(witdh);
         // Couleur marron
         this.setStyle("-fx-background-color: rgb(59,54,51); -fx-margin: 100px");
-
         init();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -64,7 +63,6 @@ public class Board extends VBox {
             }
         }
         print();
-        System.out.println("ALERTE: CHANGER DEPLACEMENT APRES PREMIER COUP DU PION (PAS DE DEPLACEMENTS DEUX CASES)");
     }
 
     /**
