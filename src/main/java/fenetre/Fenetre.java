@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import board.Board;
 
@@ -21,16 +20,15 @@ public class Fenetre extends Application {
      *
      * @param primaryStage The stage is the window that will be displayed.
      */
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         // construction du stage
         primaryStage.setTitle("Chess Game");
         primaryStage.setWidth(600);
         primaryStage.setHeight(600);
         // creations de backgrounds
-        Background b2 = new Background(new BackgroundFill(Color.rgb(120, 120, 220), CornerRadii.EMPTY, null));
         // construction de la scene
         BorderPane root = new BorderPane();
-        root.setBackground(b2);
+        root.setStyle("-fx-background-color: rgb(59,54,51); -fx-margin: 100px");
         Board plateau = new Board(500, 500);
         plateau.setAlignment(Pos.CENTER);
         root.setCenter(plateau);

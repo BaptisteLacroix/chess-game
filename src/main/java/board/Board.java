@@ -2,6 +2,7 @@ package board;
 
 import java.util.ArrayList;
 
+import javafx.event.Event;
 import pieces.*;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -405,25 +406,51 @@ public class Board extends VBox {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Case piece = (Case) ((HBox) this.getChildren().get(i)).getChildren().get(j);
-                piece.setOnDragDetected(event -> {
-                    if (piece.getImageView() != null) {
-                        Dragboard db = piece.startDragAndDrop(TransferMode.MOVE);
-                        ClipboardContent content = new ClipboardContent();
-                        ImageView image = piece.getImageView();
-                        image.setPreserveRatio(true);
-                        content.putImage(image.getImage());
-                        content.put(this.dataFormat, piece.getValue());
-                        xDetected = piece.getX();
-                        yDetected = piece.getY();
-                        db.setContent(content);
-                        db.setDragView(piece.snapshot(null, null));
-                        event.consume();
+                if (player) {
+                    if (piece.getValue() > 0) {
+                        piece.setOnDragDetected(event -> {
+                            if (piece.getImageView() != null) {
+                                Dragboard db = piece.startDragAndDrop(TransferMode.MOVE);
+                                ClipboardContent content = new ClipboardContent();
+                                ImageView image = piece.getImageView();
+                                image.setPreserveRatio(true);
+                                content.putImage(image.getImage());
+                                content.put(this.dataFormat, piece.getValue());
+                                xDetected = piece.getX();
+                                yDetected = piece.getY();
+                                db.setContent(content);
+                                db.setDragView(piece.snapshot(null, null));
+                                event.consume();
+                            }
+                        });
+                    } else {
+                        piece.setOnDragDetected(Event::consume);
                     }
-                });
+                }
+                else {
+                    if (piece.getValue() < 0) {
+                        piece.setOnDragDetected(event -> {
+                            if (piece.getImageView() != null) {
+                                Dragboard db = piece.startDragAndDrop(TransferMode.MOVE);
+                                ClipboardContent content = new ClipboardContent();
+                                ImageView image = piece.getImageView();
+                                image.setPreserveRatio(true);
+                                content.putImage(image.getImage());
+                                content.put(this.dataFormat, piece.getValue());
+                                xDetected = piece.getX();
+                                yDetected = piece.getY();
+                                db.setContent(content);
+                                db.setDragView(piece.snapshot(null, null));
+                                event.consume();
+                            }
+                        });
+                    } else {
+                        piece.setOnDragDetected(Event::consume);
+                    }
+                }
             }
         }
     }
-
 
     /**
      * It defines the depot zone for the pieces
@@ -602,6 +629,7 @@ public class Board extends VBox {
             // Old position of the piece
             setVoidCaseToNull();
         }
+        this.player = !player;
         this.defineDepotZone();
     }
 
@@ -662,6 +690,7 @@ public class Board extends VBox {
             // Old position of the piece
             setVoidCaseToNull();
         }
+        this.player = !player;
         this.defineDepotZone();
     }
 
