@@ -1,7 +1,6 @@
 package board;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import pieces.*;
 import javafx.geometry.Pos;
@@ -210,6 +209,12 @@ public class Board extends VBox {
         setWhiteRook(ligneActuelle, rook2);
     }
 
+    /**
+     * It sets the white rook's moves and the color of the case when the mouse is on it
+     *
+     * @param ligneActuelle the current line of the board
+     * @param rook the case where the rook is
+     */
     private void setWhiteRook(ArrayList<Case> ligneActuelle, Case rook) {
         rook.setOnMouseEntered(event -> {
             rook.setStyle(yellow);
@@ -222,6 +227,12 @@ public class Board extends VBox {
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), rook);
     }
 
+    /**
+     * It sets the white knight's moves and the color of the case when the mouse is on it
+     *
+     * @param ligneActuelle the current line of the board
+     * @param knight the Case object that is the knight
+     */
     private void setWhiteKnight(ArrayList<Case> ligneActuelle, Case knight) {
         knight.setOnMouseEntered(event -> {
             knight.setStyle(yellow);
@@ -234,6 +245,12 @@ public class Board extends VBox {
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), knight);
     }
 
+    /**
+     * It sets the bishop's moves and the bishop's image
+     *
+     * @param ligneActuelle the current line of the board
+     * @param bishop the Case object that will be set as a white bishop
+     */
     private void setWhiteBishop(ArrayList<Case> ligneActuelle, Case bishop) {
         bishop.setOnMouseEntered(event -> {
             bishop.setStyle(yellow);
@@ -294,6 +311,12 @@ public class Board extends VBox {
         setBlackRook(ligneActuelle, rook2);
     }
 
+    /**
+     * It sets the black rook's moves and the color of the case when the mouse is on it
+     *
+     * @param ligneActuelle the current line of the board
+     * @param rook the case where the rook is
+     */
     private void setBlackRook(ArrayList<Case> ligneActuelle, Case rook) {
         rook.setOnMouseEntered(event -> {
             rook.setStyle(yellow);
@@ -306,6 +329,12 @@ public class Board extends VBox {
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), rook);
     }
 
+    /**
+     * It sets the black knight's moves and the color of the case when the mouse is on it
+     *
+     * @param ligneActuelle the current line of the board
+     * @param knight the Case object that is the knight
+     */
     private void setBlackKnight(ArrayList<Case> ligneActuelle, Case knight) {
         knight.setOnMouseEntered(event -> {
             knight.setStyle(yellow);
@@ -318,6 +347,12 @@ public class Board extends VBox {
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), knight);
     }
 
+    /**
+     * It sets the black bishop's moves and the bishop's image
+     *
+     * @param ligneActuelle the line of the board where the piece is
+     * @param bishop the Case object that will be set as a black bishop
+     */
     private void setBlackBishop(ArrayList<Case> ligneActuelle, Case bishop) {
         bishop.setOnMouseEntered(event -> {
             bishop.setStyle(yellow);
@@ -538,6 +573,7 @@ public class Board extends VBox {
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
 
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
             // Old position of the piece
             ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(imageDB);
@@ -559,6 +595,8 @@ public class Board extends VBox {
             piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
+
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
 
             // Old position of the piece
@@ -595,6 +633,8 @@ public class Board extends VBox {
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
 
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
+
 
             // Old position of the piece
             ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(imageDB);
@@ -617,6 +657,7 @@ public class Board extends VBox {
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
 
+            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
             // Old position of the piece
             setVoidCaseToNull();

@@ -74,9 +74,15 @@ public class Bishop {
                 boolean isValid = true;
                 int n = 0;
                 while (isValid && (source.getX() + n) < db.getDragViewOffsetX() && (source.getY() + n) < db.getDragViewOffsetY()) {
+                    System.out.println("------------------------------------------------------");
+                    System.out.println((((Case) ((HBox) vbox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0) &&
+                            (source.getX() - n + 1 != db.getDragViewOffsetX() && source.getY() - n + 1 != db.getDragViewOffsetY()));
+                    System.out.println(((Case) ((HBox) vbox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0);
+                    System.out.println((source.getX() + n + 1) + " != " + db.getDragViewOffsetX() + " && " + (source.getY() + n + 1) + "!=" + db.getDragViewOffsetY());
+                    System.out.println("------------------------------------------------------\n");
                     if (((Case) ((HBox) vbox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() > 0 ||
                             (((Case) ((HBox) vbox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0) &&
-                                    (source.getX() - n + 1 != db.getDragViewOffsetX() && source.getY() - n + 1 != db.getDragViewOffsetY())) {
+                                    (source.getX() + n + 1 != db.getDragViewOffsetX() && source.getY() + n + 1 != db.getDragViewOffsetY())) {
                         isValid = false;
                     }
                     n++;
