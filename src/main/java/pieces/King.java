@@ -12,14 +12,14 @@ public class King {
     private static final String red = "-fx-background-color: red;";
 
     public static boolean checkTheWhiteMove(Dragboard db, Case source, Case piece) {
-        return ((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Haut Gauche
+        return (((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Haut Gauche
                 (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() <= 0) || // Haut
                 (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0) || // Haut Droite
                 (db.getDragViewOffsetX() == source.getX() && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Gauche
                 (db.getDragViewOffsetX() == source.getX() && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0) || // Droite
                 (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() <= 0) || // Bas Gauche
                 (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() && piece.getValue() <= 0) || // Bas
-                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0)) /* Bas Droite */;
+                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() <= 0))) /* Bas Droite */;
     }
 
     public static void whiteKingMoves(List<ArrayList<Case>> liste_cases, Case piece) {

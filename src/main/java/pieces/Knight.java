@@ -4,8 +4,6 @@ import board.Case;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;

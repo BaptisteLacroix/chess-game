@@ -1,6 +1,7 @@
 package board;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import pieces.*;
 import javafx.geometry.Pos;
@@ -44,9 +45,14 @@ public class Board extends VBox {
      */
     private static final String yellow = "-fx-background-color: yellow;";
 
+    private boolean player = true; // True = Blanc / False = Noir
+    private boolean math = false;
+    private boolean echec = false;
+
     /**
      * It creates a board with the pieces in their initial positions
-     * @param witdh The width of the board.
+     *
+     * @param witdh  The width of the board.
      * @param height The height of the board.
      */
     public Board(int witdh, int height) {
@@ -163,37 +169,81 @@ public class Board extends VBox {
      * @param ligneActuelle the line we're currently working on
      */
     private void intializeLinesWhite(int i, ArrayList<Case> ligneActuelle) {
-        Case c = new Case(i, 1, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), c);
+        Case rook = new Case(i, 1, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")));
+        setWhiteRook(ligneActuelle, rook);
 
-        c = new Case(i, 2, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), c);
+        Case knight = new Case(i, 2, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")));
+        setWhiteKnight(ligneActuelle, knight);
 
-        c = new Case(i, 3, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), c);
+        Case bishop = new Case(i, 3, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")));
+        setWhiteBishop(ligneActuelle, bishop);
 
-        c = new Case(i, 4, 9, new ImageView(new Image("file:resources/white_pieces/queen_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/queen_white.png")), c);
+        Case queen = new Case(i, 4, 9, new ImageView(new Image("file:resources/white_pieces/queen_white.png")));
+        queen.setOnMouseEntered(event -> {
+            queen.setStyle(yellow);
+            Queen.whiteQueenMoves(this.liste_cases, queen);
+        });
+        queen.setOnMouseExited(event -> {
+            queen.setStyle(queen.getBackground().toString());
+            Queen.resetWhiteQueenMoves(this.liste_cases, queen, queen.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/queen_white.png")), queen);
 
-        c = new Case(i, 5, 800, new ImageView(new Image("file:resources/white_pieces/king_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/king_white.png")), c);
+        Case king = new Case(i, 5, 800, new ImageView(new Image("file:resources/white_pieces/king_white.png")));
+        king.setOnMouseEntered(event -> {
+            king.setStyle(yellow);
+            King.whiteKingMoves(this.liste_cases, king);
+        });
+        king.setOnMouseExited(event -> {
+            king.setStyle(king.getBackground().toString());
+            King.resetWhiteKingMoves(this.liste_cases, king, king.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/king_white.png")), king);
 
-        c = new Case(i, 6, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), c);
+        Case bishop2 = new Case(i, 6, 3, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")));
+        setWhiteBishop(ligneActuelle, bishop2);
 
-        c = new Case(i, 7, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), c);
+        Case knight2 = new Case(i, 7, 2, new ImageView(new Image("file:resources/white_pieces/knight_white.png")));
+        setWhiteKnight(ligneActuelle, knight2);
 
-        c = new Case(i, 8, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), c);
+        Case rook2 = new Case(i, 8, 5, new ImageView(new Image("file:resources/white_pieces/rook_white.png")));
+        setWhiteRook(ligneActuelle, rook2);
+    }
+
+    private void setWhiteRook(ArrayList<Case> ligneActuelle, Case rook) {
+        rook.setOnMouseEntered(event -> {
+            rook.setStyle(yellow);
+            Rook.whiteRookMoves(this.liste_cases, rook);
+        });
+        rook.setOnMouseExited(event -> {
+            rook.setStyle(rook.getBackground().toString());
+            Rook.resetWhiteRookMoves(this.liste_cases, rook, rook.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), rook);
+    }
+
+    private void setWhiteKnight(ArrayList<Case> ligneActuelle, Case knight) {
+        knight.setOnMouseEntered(event -> {
+            knight.setStyle(yellow);
+            Knight.whiteKnightMoves(this.liste_cases, knight);
+        });
+        knight.setOnMouseExited(event -> {
+            knight.setStyle(knight.getBackground().toString());
+            Knight.resetWhiteKnightMoves(this.liste_cases, knight, knight.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), knight);
+    }
+
+    private void setWhiteBishop(ArrayList<Case> ligneActuelle, Case bishop) {
+        bishop.setOnMouseEntered(event -> {
+            bishop.setStyle(yellow);
+            Bishop.whiteBishopMoves(this.liste_cases, bishop);
+        });
+        bishop.setOnMouseExited(event -> {
+            bishop.setStyle(bishop.getBackground().toString());
+            Bishop.resetWhiteBishopMoves(this.liste_cases, bishop, bishop.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), bishop);
     }
 
     /**
@@ -203,48 +253,81 @@ public class Board extends VBox {
      * @param ligneActuelle the line we're currently working on
      */
     private void intializeLinesBlack(int i, ArrayList<Case> ligneActuelle) {
-        Case c = new Case(i, 1, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), c);
+        Case rook = new Case(i, 1, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")));
+        setBlackRook(ligneActuelle, rook);
 
-        c = new Case(i, 2, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), c);
+        Case knight = new Case(i, 2, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")));
+        setBlackKnight(ligneActuelle, knight);
 
-        c = new Case(i, 3, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), c);
+        Case bishop = new Case(i, 3, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")));
+        setBlackBishop(ligneActuelle, bishop);
 
-        c = new Case(i, 4, -9, new ImageView(new Image("file:resources/black_pieces/queen_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/queen_black.png")), c);
+        Case queen = new Case(i, 4, -9, new ImageView(new Image("file:resources/black_pieces/queen_black.png")));
+        queen.setOnMouseEntered(event -> {
+            queen.setStyle(yellow);
+            Queen.blackQueenMoves(this.liste_cases, queen);
+        });
+        queen.setOnMouseExited(event -> {
+            queen.setStyle(queen.getBackground().toString());
+            Queen.resetBlackQueenMoves(this.liste_cases, queen, queen.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/queen_black.png")), queen);
 
-        c = new Case(i, 5, -800, new ImageView(new Image("file:resources/black_pieces/king_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/king_black.png")), c);
+        Case king = new Case(i, 5, -800, new ImageView(new Image("file:resources/black_pieces/king_black.png")));
+        king.setOnMouseEntered(event -> {
+            king.setStyle(yellow);
+            King.blackKingMoves(this.liste_cases, king);
+        });
+        king.setOnMouseExited(event -> {
+            king.setStyle(king.getBackground().toString());
+            King.resetBlackKingMoves(this.liste_cases, king, king.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/king_black.png")), king);
 
-        c = new Case(i, 6, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), c);
+        Case bishop2 = new Case(i, 6, -3, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")));
+        setBlackBishop(ligneActuelle, bishop2);
 
-        c = new Case(i, 7, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), c);
+        Case knight2 = new Case(i, 7, -2, new ImageView(new Image("file:resources/black_pieces/knight_black.png")));
+        setBlackKnight(ligneActuelle, knight2);
 
-        c = new Case(i, 8, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")));
-        setMouseEvent(c);
-        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), c);
+        Case rook2 = new Case(i, 8, -5, new ImageView(new Image("file:resources/black_pieces/rook_black.png")));
+        setBlackRook(ligneActuelle, rook2);
     }
 
-    /**
-     * It sets the mouse event for a Case object
-     *
-     * @param c the Case object that is being set
-     */
-    private void setMouseEvent(Case c) {
-        Background color = c.getBackground();
-        c.setOnMouseEntered(event -> c.setStyle(yellow));
-        c.setOnMouseExited(event -> c.setStyle(color.toString()));
+    private void setBlackRook(ArrayList<Case> ligneActuelle, Case rook) {
+        rook.setOnMouseEntered(event -> {
+            rook.setStyle(yellow);
+            Rook.blackRookMoves(this.liste_cases, rook);
+        });
+        rook.setOnMouseExited(event -> {
+            rook.setStyle(rook.getBackground().toString());
+            Rook.resetBlackRookMoves(this.liste_cases, rook, rook.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), rook);
+    }
+
+    private void setBlackKnight(ArrayList<Case> ligneActuelle, Case knight) {
+        knight.setOnMouseEntered(event -> {
+            knight.setStyle(yellow);
+            Knight.blackKnightMoves(this.liste_cases, knight);
+        });
+        knight.setOnMouseExited(event -> {
+            knight.setStyle(knight.getBackground().toString());
+            Knight.resetBlackKnightMoves(this.liste_cases, knight, knight.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), knight);
+    }
+
+    private void setBlackBishop(ArrayList<Case> ligneActuelle, Case bishop) {
+        bishop.setOnMouseEntered(event -> {
+            bishop.setStyle(yellow);
+            Bishop.blackBishopMoves(this.liste_cases, bishop);
+        });
+        bishop.setOnMouseExited(event -> {
+            bishop.setStyle(bishop.getBackground().toString());
+            Bishop.resetBlackBishopMoves(this.liste_cases, bishop, bishop.getBackground());
+        });
+        setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), bishop);
     }
 
     /**
@@ -455,7 +538,6 @@ public class Board extends VBox {
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
 
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
             // Old position of the piece
             ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(imageDB);
@@ -477,7 +559,6 @@ public class Board extends VBox {
             piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
 
             // Old position of the piece
@@ -514,8 +595,6 @@ public class Board extends VBox {
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
 
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
-
 
             // Old position of the piece
             ((Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1)).setImageView(imageDB);
@@ -537,7 +616,6 @@ public class Board extends VBox {
             piece.setNewPosition((int) db.getDragViewOffsetX(), (int) db.getDragViewOffsetY());
             Background color = piece.getBackground();
             this.setColorMoves(color, piece);
-            ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1).setOnMouseEntered(event -> Pawn.resetWhitePawnMoves(this.liste_cases, (Case) ((HBox) this.getChildren().get(xDetected - 1)).getChildren().get(yDetected - 1), color));
 
 
             // Old position of the piece
