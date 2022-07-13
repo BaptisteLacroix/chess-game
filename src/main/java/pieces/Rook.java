@@ -12,6 +12,12 @@ import java.util.List;
 
 public class Rook {
     private static final String red = "-fx-background-color: red;";
+    private static final String orange = "-fx-background-color: orange;";
+    private static boolean echecBlack = false;
+
+    public static boolean isEchecBlack() {
+        return echecBlack;
+    }
 
     public static boolean checkTheWhiteMove(Dragboard db, VBox vBox, Case source) {
         if ((db.getDragViewOffsetX() == source.getX())) { // Gauche Droite
@@ -21,7 +27,7 @@ public class Rook {
                 while (isValid && (source.getY() + ligne) < db.getDragViewOffsetY()) { // Droite
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() > 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() < 0 &&
-                                    (source.getY() + ligne + 1) != db.getDragViewOffsetY())) {
+                                    (source.getY() + ligne + 1) != db.getDragViewOffsetY()) && ((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() + ligne)).getValue() != -800) {
                         isValid = false;
                     }
                     ligne++;
@@ -31,7 +37,7 @@ public class Rook {
                 while (isValid && (source.getY() - ligne) > db.getDragViewOffsetY()) { // Gauche
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() > 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() < 0 &&
-                                    (source.getY() - ligne + 1) != db.getDragViewOffsetY())) {
+                                    (source.getY() - ligne + 1) != db.getDragViewOffsetY()) && ((Case) ((HBox) vBox.getChildren().get(source.getX() - 1)).getChildren().get(source.getY() - ligne - 1)).getValue() != -800) {
                         isValid = false;
                     }
                     ligne++;
@@ -45,7 +51,7 @@ public class Rook {
                 while (isValid && (source.getX() + colonne) < db.getDragViewOffsetX()) { // Bas
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
-                                    (source.getX() + colonne + 1) != db.getDragViewOffsetX())) {
+                                    (source.getX() + colonne + 1) != db.getDragViewOffsetX()) && ((Case) ((HBox) vBox.getChildren().get(source.getX() + colonne)).getChildren().get(source.getY() - 1)).getValue() != -800) {
                         isValid = false;
                     }
                     colonne++;
@@ -55,7 +61,7 @@ public class Rook {
                 while (isValid && (source.getX() - colonne) > db.getDragViewOffsetX()) { // Haut
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() > 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() < 0 &&
-                                    (source.getX() - colonne + 1) != db.getDragViewOffsetX())) {
+                                    (source.getX() - colonne + 1) != db.getDragViewOffsetX()) && ((Case) ((HBox) vBox.getChildren().get(source.getX() - colonne - 1)).getChildren().get(source.getY() - 1)).getValue() != -800) {
                         isValid = false;
                     }
                     colonne++;
@@ -114,17 +120,24 @@ public class Rook {
         int colonne = 0;
         boolean adversaire = false;
         while (piece.getX() + colonne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
+            if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() == -800) { // Adversaire
+                liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setStyle(orange);
+                adversaire = true;
+                echecBlack = true;
+            } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setStyle(red);
                 adversaire = true;
+                echecBlack = false;
             } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
                 adversaire = true;
+                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setGraphic(newImage);
                 colonne++;
+                echecBlack = false;
             }
         }
     }
@@ -138,17 +151,24 @@ public class Rook {
         int colonne = 1;
         boolean adversaire = false;
         while (piece.getX() - 1 - colonne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
+            if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() == -800) { // Adversaire
+                liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setStyle(orange);
+                adversaire = true;
+                echecBlack = true;
+            } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setStyle(red);
                 adversaire = true;
+                echecBlack = false;
             } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
                 adversaire = true;
+                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setGraphic(newImage);
                 colonne++;
+                echecBlack = false;
             }
         }
     }
@@ -162,17 +182,24 @@ public class Rook {
         int ligne = 0;
         boolean adversaire = false;
         while (piece.getY() + ligne < 8 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() < 0) { // Adversaire
+            if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() == -800) { // Adversaire
+                liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setStyle(orange);
+                adversaire = true;
+                echecBlack = true;
+            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setStyle(red);
                 adversaire = true;
+                echecBlack = false;
             } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() > 0) { // Allié
                 adversaire = true;
+                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setGraphic(newImage);
                 ligne++;
+                echecBlack = false;
             }
         }
     }
@@ -186,17 +213,24 @@ public class Rook {
         int ligne = 1;
         boolean adversaire = false;
         while (piece.getY() - 1 - ligne >= 0 && !adversaire) {
-            if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() < 0) { // Adversaire
+            if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() == -800) { // Adversaire
+                liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setStyle(orange);
+                adversaire = true;
+                echecBlack = true;
+            } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setStyle(red);
                 adversaire = true;
+                echecBlack = false;
             } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() > 0) { // Allié
                 adversaire = true;
+                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setGraphic(newImage);
                 ligne++;
+                echecBlack = false;
             }
         }
     }

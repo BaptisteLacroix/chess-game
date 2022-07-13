@@ -28,14 +28,20 @@ public class Pawn {
      * An Dot ImageView object
      */
     private static final ImageView image2 = new ImageView("file:./resources/dot.png");
+    private static final String orange = "-fx-background-color: orange;";
+    private static boolean echecBlack = false;
+
+    public static boolean isEchecBlack() {
+        return echecBlack;
+    }
 
     /**
-     *  It checks if the move is valid for the white player
+     * It checks if the move is valid for the white player
      *
-     * @param db The Dragboard object that contains the data being dragged.
-     * @param vBox The VBox that contains the HBoxes that contain the Cases.
+     * @param db     The Dragboard object that contains the data being dragged.
+     * @param vBox   The VBox that contains the HBoxes that contain the Cases.
      * @param source the case where the piece is located
-     * @param piece The piece that is being dragged
+     * @param piece  The piece that is being dragged
      * @return A boolean value.
      */
     public static boolean checkTheWhiteMove(Dragboard db, VBox vBox, Case source, Case piece) {
@@ -43,7 +49,7 @@ public class Pawn {
                 ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() && piece.getValue() == 0) &&
                         (((Case) ((HBox) vBox.getChildren().get(source.getX() - 2)).getChildren().get(source.getY() - 1)).getValue() == 0) && source.getX() == 7) ||
                 ((db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 1 ||
-                        db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 1) && piece.getValue() < 0));
+                        db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 1) && piece.getValue() < 0 && piece.getValue() != -800));
     }
 
     /**
@@ -54,10 +60,24 @@ public class Pawn {
     public static void whitePawnMoves(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() != 1) {
             if (piece.getX() == 7 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
-                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0)
+                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() == -800) {
+                    liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(orange);
+                    echecBlack = true;
+                } else if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(red);
-                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0)
+                    echecBlack = false;
+                } else  {
+                    echecBlack = false;
+                }
+                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() == -800) {
+                    liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(orange);
+                    echecBlack = true;
+                } else if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(red);
+                    echecBlack = false;
+                } else  {
+                    echecBlack = false;
+                }
                 image.setFitHeight(500 / (double) 8);
                 image.setFitWidth(500 / (double) 8);
                 image2.setFitHeight(500 / (double) 8);
@@ -65,19 +85,45 @@ public class Pawn {
                 liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setGraphic(image);
                 liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).setGraphic(image2);
             } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0) {
-                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0)
+                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() == -800) {
+                    liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(orange);
+                    echecBlack = true;
+                } else if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(red);
-                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0)
+                    echecBlack = false;
+                } else  {
+                    echecBlack = false;
+                }
+                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() == -800) {
+                    liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(orange);
+                    echecBlack = true;
+                } else if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(red);
+                    echecBlack = false;
+                } else  {
+                    echecBlack = false;
+                }
                 image.setFitHeight(500 / (double) 8);
                 image.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setGraphic(image);
             } else {
-                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
+                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() == -800) {
+                    liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(orange);
+                    echecBlack = true;
+                } else if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(red);
+                    echecBlack = false;
+                } else  {
+                    echecBlack = false;
                 }
-                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
+                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() == -800) {
+                    liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(orange);
+                    echecBlack = true;
+                } else if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(red);
+                    echecBlack = false;
+                } else  {
+                    echecBlack = false;
                 }
             }
         }
@@ -105,12 +151,10 @@ public class Pawn {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(color.toString());
                 liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).setGraphic(null);
             } else {
-                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
+                if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0)
                     liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(color.toString());
-                }
-                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
+                if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0)
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(color.toString());
-                }
             }
         }
     }
@@ -118,10 +162,10 @@ public class Pawn {
     /**
      * It checks if the move is valid for the black player
      *
-     * @param db The Dragboard object
-     * @param vBox the VBox that contains the HBoxes that contain the Cases
+     * @param db     The Dragboard object
+     * @param vBox   the VBox that contains the HBoxes that contain the Cases
      * @param source the piece that is being moved
-     * @param piece the piece that is being dragged
+     * @param piece  the piece that is being dragged
      * @return A boolean value.
      */
     public static boolean checkTheBlackMove(Dragboard db, VBox vBox, Case source, Case piece) {
