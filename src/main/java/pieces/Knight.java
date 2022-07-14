@@ -33,6 +33,7 @@ public class Knight {
     }
 
     public static void whiteKnightMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecBlack = false;
         // Haut Droite et Gauche
         whiteKnightMoveUp(liste_cases, piece);
 
@@ -55,9 +56,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() < 0) {
                 // case gauche ennemie
                 liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
                 // case gauche libre
@@ -65,9 +63,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setGraphic(newImage); // Case gauche libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
         if (piece.getX() > 2 && piece.getY() < 8) {
@@ -78,9 +73,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() < 0) {
                 // Case droite ennemie
                 liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(red); // Case droite ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0) {
                 // Case droite libre
@@ -88,9 +80,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 3).get(piece.getY()).setGraphic(newImage); // Case droite libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
     }
@@ -104,9 +93,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() < 0) {
                 // case haut ennemie
                 liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(red); // Case haut ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
                 // case haut libre
@@ -114,9 +100,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setGraphic(newImage); // Case haut libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
         if (piece.getY() > 2 && piece.getX() < 8) {
@@ -127,9 +110,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() < 0) {
                 // Case bas ennemie
                 liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(red); // Case bas ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0) {
                 // Case bas libre
@@ -137,9 +117,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX()).get(piece.getY() - 3).setGraphic(newImage); // Case bas libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
     }
@@ -153,9 +130,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() < 0) {
                 // case haut ennemie
                 liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(red); // Case haut ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
                 // case haut libre
@@ -163,9 +137,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setGraphic(newImage); // Case haut libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
         if (piece.getY() < 7 && piece.getX() < 7) {
@@ -176,9 +147,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() < 0) {
                 // Case bas ennemie
                 liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(red); // Case bas ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0) {
                 // Case bas libre
@@ -186,9 +154,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX()).get(piece.getY() + 1).setGraphic(newImage); // Case bas libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
     }
@@ -202,9 +167,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() < 0) {
                 // case gauche ennemie
                 liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
                 // case gauche libre
@@ -212,9 +174,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setGraphic(newImage); // Case gauche libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
         if (piece.getX() < 7 && piece.getY() < 8) {
@@ -225,9 +184,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() < 0) {
                 // Case droite ennemie
                 liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(red); // Case droite ennemie
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
             if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0) {
                 // Case droite libre
@@ -235,9 +191,6 @@ public class Knight {
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() + 1).get(piece.getY()).setGraphic(newImage); // Case droite libre
-                echecBlack = false;
-            } else  {
-                echecBlack = false;
             }
         }
     }
@@ -360,6 +313,7 @@ public class Knight {
     }
 
     public static void blackKnightMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecWhite = false;
         // Haut Droite et Gauche
         blackKnightMoveUp(liste_cases, piece);
 
@@ -382,8 +336,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
                 liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
                 // case gauche libre
@@ -401,8 +353,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() > 0) {
                 // Case droite ennemie
                 liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(red); // Case droite ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0) {
                 // Case droite libre
@@ -423,8 +373,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
                 // case haut ennemie
                 liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(red); // Case haut ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
                 // case haut libre
@@ -442,8 +390,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() > 0) {
                 // Case bas ennemie
                 liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(red); // Case bas ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0) {
                 // Case bas libre
@@ -464,8 +410,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
                 // case haut ennemie
                 liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(red); // Case haut ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
                 // case haut libre
@@ -483,8 +427,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() > 0) {
                 // Case bas ennemie
                 liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(red); // Case bas ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0) {
                 // Case bas libre
@@ -505,8 +447,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
                 liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
                 // case gauche libre
@@ -524,8 +464,6 @@ public class Knight {
             } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() > 0) {
                 // Case droite ennemie
                 liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(red); // Case droite ennemie
-            } else  {
-                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0) {
                 // Case droite libre

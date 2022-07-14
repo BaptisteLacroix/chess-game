@@ -222,12 +222,10 @@ public class Board extends VBox {
         rook.setOnMouseEntered(event -> {
             rook.setStyle(yellow);
             Rook.whiteRookMoves(this.liste_cases, rook);
-            this.echec = Rook.isEchecBlack();
         });
         rook.setOnMouseExited(event -> {
             rook.setStyle(rook.getBackground().toString());
             Rook.resetWhiteRookMoves(this.liste_cases, rook, rook.getBackground());
-            this.echec = Rook.isEchecBlack();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/rook_white.png")), rook);
     }
@@ -242,12 +240,10 @@ public class Board extends VBox {
         knight.setOnMouseEntered(event -> {
             knight.setStyle(yellow);
             Knight.whiteKnightMoves(this.liste_cases, knight);
-            this.echec = Knight.isEchecBlack();
         });
         knight.setOnMouseExited(event -> {
             knight.setStyle(knight.getBackground().toString());
             Knight.resetWhiteKnightMoves(this.liste_cases, knight, knight.getBackground());
-            this.echec = Knight.isEchecBlack();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/knight_white.png")), knight);
     }
@@ -262,12 +258,10 @@ public class Board extends VBox {
         bishop.setOnMouseEntered(event -> {
             bishop.setStyle(yellow);
             Bishop.whiteBishopMoves(this.liste_cases, bishop);
-            this.echec = Bishop.isEchecBlack();
         });
         bishop.setOnMouseExited(event -> {
             bishop.setStyle(bishop.getBackground().toString());
             Bishop.resetWhiteBishopMoves(this.liste_cases, bishop, bishop.getBackground());
-            this.echec = Bishop.isEchecBlack();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/white_pieces/bishop_white.png")), bishop);
     }
@@ -292,12 +286,10 @@ public class Board extends VBox {
         queen.setOnMouseEntered(event -> {
             queen.setStyle(yellow);
             Queen.blackQueenMoves(this.liste_cases, queen);
-            this.echec = Rook.isEchecWhite() || Bishop.isEchecWhite();
         });
         queen.setOnMouseExited(event -> {
             queen.setStyle(queen.getBackground().toString());
             Queen.resetBlackQueenMoves(this.liste_cases, queen, queen.getBackground());
-            this.echec = Rook.isEchecWhite() || Bishop.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/queen_black.png")), queen);
 
@@ -332,12 +324,10 @@ public class Board extends VBox {
         rook.setOnMouseEntered(event -> {
             rook.setStyle(yellow);
             Rook.blackRookMoves(this.liste_cases, rook);
-            this.echec = Rook.isEchecWhite();
         });
         rook.setOnMouseExited(event -> {
             rook.setStyle(rook.getBackground().toString());
             Rook.resetBlackRookMoves(this.liste_cases, rook, rook.getBackground());
-            this.echec = Rook.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), rook);
     }
@@ -352,12 +342,10 @@ public class Board extends VBox {
         knight.setOnMouseEntered(event -> {
             knight.setStyle(yellow);
             Knight.blackKnightMoves(this.liste_cases, knight);
-            this.echec = Knight.isEchecWhite();
         });
         knight.setOnMouseExited(event -> {
             knight.setStyle(knight.getBackground().toString());
             Knight.resetBlackKnightMoves(this.liste_cases, knight, knight.getBackground());
-            this.echec = Knight.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), knight);
     }
@@ -372,12 +360,10 @@ public class Board extends VBox {
         bishop.setOnMouseEntered(event -> {
             bishop.setStyle(yellow);
             Bishop.blackBishopMoves(this.liste_cases, bishop);
-            this.echec = Bishop.isEchecWhite();
         });
         bishop.setOnMouseExited(event -> {
             bishop.setStyle(bishop.getBackground().toString());
             Bishop.resetBlackBishopMoves(this.liste_cases, bishop, bishop.getBackground());
-            this.echec = Bishop.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), bishop);
     }
@@ -645,9 +631,8 @@ public class Board extends VBox {
             setVoidCaseToNull();
         }
         this.player = !player;
-        System.out.println(echec);
-        System.out.println(this.echec);
-        if (this.echec)
+        System.out.println("isEchecWhite : " + (Pawn.isEchecWhite() || Knight.isEchecWhite() || Bishop.isEchecWhite() || Rook.isEchecWhite()));
+        if (Pawn.isEchecWhite() || Knight.isEchecWhite() || Bishop.isEchecWhite() || Rook.isEchecWhite())
             System.out.println("Echec");
         this.defineDepotZone();
     }
@@ -710,9 +695,8 @@ public class Board extends VBox {
             setVoidCaseToNull();
         }
         this.player = !player;
-        System.out.println(echec);
-        System.out.println(this.echec);
-        if (this.echec)
+        System.out.println("isEchecBlack : " + (Pawn.isEchecBlack() || Knight.isEchecBlack() || Bishop.isEchecBlack() || Rook.isEchecBlack()));
+        if (Pawn.isEchecBlack() || Knight.isEchecBlack() || Bishop.isEchecBlack() || Rook.isEchecBlack())
             System.out.println("Echec");
         this.defineDepotZone();
     }
@@ -740,12 +724,10 @@ public class Board extends VBox {
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Pawn.blackPawnMoves(this.liste_cases, piece);
-                    this.echec = Pawn.isEchecWhite();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Pawn.resetBlackPawnMoves(this.liste_cases, piece, color);
-                    this.echec = Pawn.isEchecWhite();
                 });
                 break;
             case -2:
@@ -762,36 +744,30 @@ public class Board extends VBox {
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Bishop.blackBishopMoves(this.liste_cases, piece);
-                    this.echec = Bishop.isEchecWhite();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Bishop.resetBlackBishopMoves(this.liste_cases, piece, color);
-                    this.echec = Bishop.isEchecWhite();
                 });
                 break;
             case -5:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Rook.blackRookMoves(this.liste_cases, piece);
-                    this.echec = Rook.isEchecWhite();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Rook.resetBlackRookMoves(this.liste_cases, piece, color);
-                    this.echec = Rook.isEchecWhite();
                 });
                 break;
             case -9:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Queen.blackQueenMoves(this.liste_cases, piece);
-                    this.echec = Rook.isEchecWhite() ||Bishop.isEchecWhite();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Queen.resetBlackQueenMoves(this.liste_cases, piece, color);
-                    this.echec = Rook.isEchecWhite() ||Bishop.isEchecWhite();
                 });
                 break;
             case -800:
@@ -808,60 +784,50 @@ public class Board extends VBox {
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Pawn.whitePawnMoves(this.liste_cases, piece);
-                    this.echec = Pawn.isEchecBlack();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Pawn.resetWhitePawnMoves(this.liste_cases, piece, color);
-                    this.echec = Pawn.isEchecBlack();
                 });
                 break;
             case 2:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Knight.whiteKnightMoves(this.liste_cases, piece);
-                    this.echec = Knight.isEchecBlack();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Knight.resetWhiteKnightMoves(this.liste_cases, piece, color);
-                    this.echec = Knight.isEchecBlack();
                 });
                 break;
             case 3:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Bishop.whiteBishopMoves(this.liste_cases, piece);
-                    this.echec = Bishop.isEchecBlack();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Bishop.resetWhiteBishopMoves(this.liste_cases, piece, color);
-                    this.echec = Bishop.isEchecBlack();
                 });
                 break;
             case 5:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Rook.whiteRookMoves(this.liste_cases, piece);
-                    this.echec = Rook.isEchecBlack();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Rook.resetWhiteRookMoves(this.liste_cases, piece, color);
-                    this.echec = Rook.isEchecBlack();
                 });
                 break;
             case 9:
                 piece.setOnMouseEntered(event -> {
                     piece.setStyle(yellow);
                     Queen.whiteQueenMoves(this.liste_cases, piece);
-                    this.echec = Rook.isEchecBlack() || Bishop.isEchecBlack();
                 });
                 piece.setOnMouseExited(event -> {
                     piece.setStyle(color.toString());
                     Queen.resetWhiteQueenMoves(this.liste_cases, piece, color);
-                    this.echec = Rook.isEchecBlack() || Bishop.isEchecBlack();
                 });
                 break;
             default:

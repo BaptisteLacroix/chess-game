@@ -126,6 +126,7 @@ public class Rook {
      * @param piece the piece we want to move
      */
     public static void whiteRookMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecBlack = false;
         // Colonne Bas
         whiteRookMoveDown(liste_cases, piece);
 
@@ -175,17 +176,14 @@ public class Rook {
             } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setStyle(red);
                 adversaire = true;
-                echecBlack = false;
             } else if (liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
                 adversaire = true;
-                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setGraphic(newImage);
                 colonne++;
-                echecBlack = false;
             }
         }
     }
@@ -206,17 +204,14 @@ public class Rook {
             } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setStyle(red);
                 adversaire = true;
-                echecBlack = false;
             } else if (liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).getValue() > 0) { // Allié
                 adversaire = true;
-                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setGraphic(newImage);
                 colonne++;
-                echecBlack = false;
             }
         }
     }
@@ -237,17 +232,14 @@ public class Rook {
             } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setStyle(red);
                 adversaire = true;
-                echecBlack = false;
             } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).getValue() > 0) { // Allié
                 adversaire = true;
-                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setGraphic(newImage);
                 ligne++;
-                echecBlack = false;
             }
         }
     }
@@ -268,17 +260,14 @@ public class Rook {
             } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() < 0) { // Adversaire
                 liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setStyle(red);
                 adversaire = true;
-                echecBlack = false;
             } else if (liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).getValue() > 0) { // Allié
                 adversaire = true;
-                echecBlack = false;
             } else { // Libre
                 ImageView newImage = new ImageView("file:./resources/dot.png");
                 newImage.setFitHeight(500 / (double) 8);
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setGraphic(newImage);
                 ligne++;
-                echecBlack = false;
             }
         }
     }
@@ -471,6 +460,7 @@ public class Rook {
     }
 
     public static void blackRookMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecWhite = false;
         // Colonne Bas
         blackRookMoveDown(liste_cases, piece);
 
@@ -503,7 +493,6 @@ public class Rook {
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() + colonne).get(piece.getY() - 1).setGraphic(newImage);
                 colonne++;
-                echecWhite = false;
             }
         }
     }
@@ -527,7 +516,6 @@ public class Rook {
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1 - colonne).get(piece.getY() - 1).setGraphic(newImage);
                 colonne++;
-                echecWhite = false;
             }
         }
     }
@@ -551,7 +539,6 @@ public class Rook {
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1).get(piece.getY() + ligne).setGraphic(newImage);
                 ligne++;
-                echecWhite = false;
             }
         }
     }
@@ -575,7 +562,6 @@ public class Rook {
                 newImage.setFitWidth(500 / (double) 8);
                 liste_cases.get(piece.getX() - 1).get(piece.getY() - 1 - ligne).setGraphic(newImage);
                 ligne++;
-                echecWhite = false;
             }
         }
     }

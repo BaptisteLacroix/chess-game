@@ -107,6 +107,7 @@ public class Bishop {
      * @param piece the piece we want to move
      */
     public static void whiteBishopMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecBlack = false;
         // Haut Droite et Gauche
         whiteBishopMoveUpLeft(liste_cases, piece);
 
@@ -454,6 +455,7 @@ public class Bishop {
      * @param piece the piece we want to move
      */
     public static void blackBishopMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecWhite = false;
         // Haut Droite et Gauche
         blackBishopMoveUpLeft(liste_cases, piece);
 

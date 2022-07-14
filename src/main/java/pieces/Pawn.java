@@ -62,6 +62,7 @@ public class Pawn {
      * @param piece the piece that is being moved
      */
     public static void whitePawnMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecBlack = false;
         if (piece.getX() != 1) {
             if (piece.getX() == 7 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() - 3).get(piece.getY() - 1).getValue() == 0) {
                 if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() == -800) {
@@ -69,18 +70,12 @@ public class Pawn {
                     echecBlack = true;
                 } else if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(red);
-                    echecBlack = false;
-                } else  {
-                    echecBlack = false;
                 }
                 if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() == -800) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(orange);
                     echecBlack = true;
                 } else if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(red);
-                    echecBlack = false;
-                } else  {
-                    echecBlack = false;
                 }
                 image.setFitHeight(500 / (double) 8);
                 image.setFitWidth(500 / (double) 8);
@@ -94,18 +89,12 @@ public class Pawn {
                     echecBlack = true;
                 } else if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(red);
-                    echecBlack = false;
-                } else  {
-                    echecBlack = false;
                 }
                 if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() == -800) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(orange);
                     echecBlack = true;
                 } else if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(red);
-                    echecBlack = false;
-                } else  {
-                    echecBlack = false;
                 }
                 image.setFitHeight(500 / (double) 8);
                 image.setFitWidth(500 / (double) 8);
@@ -116,18 +105,12 @@ public class Pawn {
                     echecBlack = true;
                 } else if (piece.getY() > 1 && liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY() - 2).setStyle(red);
-                    echecBlack = false;
-                } else  {
-                    echecBlack = false;
                 }
                 if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() == -800) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(orange);
                     echecBlack = true;
                 } else if (piece.getY() < 8 && liste_cases.get(piece.getX() - 2).get(piece.getY()).getValue() < 0) {
                     liste_cases.get(piece.getX() - 2).get(piece.getY()).setStyle(red);
-                    echecBlack = false;
-                } else  {
-                    echecBlack = false;
                 }
             }
         }
@@ -186,6 +169,7 @@ public class Pawn {
      * @param piece the piece that is being moved
      */
     public static void blackPawnMoves(List<ArrayList<Case>> liste_cases, Case piece) {
+        echecWhite = false;
         if (piece.getX() != 8) {
             if (piece.getX() == 2 && liste_cases.get(piece.getX()).get(piece.getY() - 1).getValue() == 0 && liste_cases.get(piece.getX() + 1).get(piece.getY() - 1).getValue() == 0) {
                 if (piece.getY() < 8 && liste_cases.get(piece.getX()).get(piece.getY()).getValue() == 800) {
@@ -212,16 +196,12 @@ public class Pawn {
                     echecWhite = true;
                 } else if (piece.getY() < 8 && liste_cases.get(piece.getX()).get(piece.getY()).getValue() > 0) {
                     liste_cases.get(piece.getX()).get(piece.getY()).setStyle(red);
-                } else  {
-                    echecWhite = false;
                 }
                 if (piece.getY() > 1 && liste_cases.get(piece.getX()).get(piece.getY() - 2).getValue() == 800) {
                     liste_cases.get(piece.getX()).get(piece.getY() - 2).setStyle(orange);
                     echecWhite = true;
                 } else if (piece.getY() > 1 && liste_cases.get(piece.getX()).get(piece.getY() - 2).getValue() > 0) {
                     liste_cases.get(piece.getX()).get(piece.getY() - 2).setStyle(red);
-                } else  {
-                    echecWhite = false;
                 }
                 image.setFitHeight(500 / (double) 8);
                 image.setFitWidth(500 / (double) 8);
@@ -232,16 +212,12 @@ public class Pawn {
                     echecWhite = true;
                 } else if (piece.getY() < 8 && liste_cases.get(piece.getX()).get(piece.getY()).getValue() > 0) {
                     liste_cases.get(piece.getX()).get(piece.getY()).setStyle(red);
-                } else  {
-                    echecWhite = false;
                 }
                 if (piece.getY() > 1 && liste_cases.get(piece.getX()).get(piece.getY() - 2).getValue() == 800) {
                     liste_cases.get(piece.getX()).get(piece.getY() - 2).setStyle(orange);
                     echecWhite = true;
                 } else if (piece.getY() > 1 && liste_cases.get(piece.getX()).get(piece.getY() - 2).getValue() > 0) {
                     liste_cases.get(piece.getX()).get(piece.getY() - 2).setStyle(red);
-                } else  {
-                    echecWhite = false;
                 }
             }
         }
