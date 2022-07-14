@@ -292,10 +292,12 @@ public class Board extends VBox {
         queen.setOnMouseEntered(event -> {
             queen.setStyle(yellow);
             Queen.blackQueenMoves(this.liste_cases, queen);
+            this.echec = Rook.isEchecWhite() || Bishop.isEchecWhite();
         });
         queen.setOnMouseExited(event -> {
             queen.setStyle(queen.getBackground().toString());
             Queen.resetBlackQueenMoves(this.liste_cases, queen, queen.getBackground());
+            this.echec = Rook.isEchecWhite() || Bishop.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/queen_black.png")), queen);
 
@@ -330,12 +332,12 @@ public class Board extends VBox {
         rook.setOnMouseEntered(event -> {
             rook.setStyle(yellow);
             Rook.blackRookMoves(this.liste_cases, rook);
-            this.echec = Rook.isEchecBlack();
+            this.echec = Rook.isEchecWhite();
         });
         rook.setOnMouseExited(event -> {
             rook.setStyle(rook.getBackground().toString());
             Rook.resetBlackRookMoves(this.liste_cases, rook, rook.getBackground());
-            this.echec = Rook.isEchecBlack();
+            this.echec = Rook.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/rook_black.png")), rook);
     }
@@ -350,12 +352,12 @@ public class Board extends VBox {
         knight.setOnMouseEntered(event -> {
             knight.setStyle(yellow);
             Knight.blackKnightMoves(this.liste_cases, knight);
-            this.echec = Knight.isEchecBlack();
+            this.echec = Knight.isEchecWhite();
         });
         knight.setOnMouseExited(event -> {
             knight.setStyle(knight.getBackground().toString());
             Knight.resetBlackKnightMoves(this.liste_cases, knight, knight.getBackground());
-            this.echec = Knight.isEchecBlack();
+            this.echec = Knight.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/knight_black.png")), knight);
     }
@@ -370,12 +372,12 @@ public class Board extends VBox {
         bishop.setOnMouseEntered(event -> {
             bishop.setStyle(yellow);
             Bishop.blackBishopMoves(this.liste_cases, bishop);
-            this.echec = Bishop.isEchecBlack();
+            this.echec = Bishop.isEchecWhite();
         });
         bishop.setOnMouseExited(event -> {
             bishop.setStyle(bishop.getBackground().toString());
             Bishop.resetBlackBishopMoves(this.liste_cases, bishop, bishop.getBackground());
-            this.echec = Bishop.isEchecBlack();
+            this.echec = Bishop.isEchecWhite();
         });
         setCase(ligneActuelle, new ImageView(new Image("file:resources/black_pieces/bishop_black.png")), bishop);
     }
