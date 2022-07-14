@@ -12,9 +12,13 @@ public class Knight {
     private static final String red = "-fx-background-color: red;";
     private static final String orange = "-fx-background-color: orange;";
     private static boolean echecBlack = false;
+    private static boolean echecWhite = false;
 
     public static boolean isEchecBlack() {
         return echecBlack;
+    }
+    public static boolean isEchecWhite() {
+        return echecWhite;
     }
 
     public static Boolean checkTheWhiteMove(Dragboard db, Case source, Case piece) {
@@ -345,14 +349,14 @@ public class Knight {
     }
 
     public static boolean checkTheBlackMove(Dragboard db, Case source, Case piece) {
-        return ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0) || // Haut Gauche
-                (db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0) || // Haut Bas
-                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0) || // Gauche Haut
-                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0) || // Gauche Bas
-                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0) || // Droite haut
-                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0) || // Droite Bas
-                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0) || // Bas Gauche
-                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0)) /* Bas Droite */;
+        return ((db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0 && piece.getValue() != 800) || // Haut Gauche
+                (db.getDragViewOffsetX() == source.getX() - 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0 && piece.getValue() != 800) || // Haut Bas
+                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0 && piece.getValue() != 800) || // Gauche Haut
+                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() - 2 && piece.getValue() >= 0 && piece.getValue() != 800) || // Gauche Bas
+                (db.getDragViewOffsetX() == source.getX() + 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0 && piece.getValue() != 800) || // Droite haut
+                (db.getDragViewOffsetX() == source.getX() - 1 && db.getDragViewOffsetY() == source.getY() + 2 && piece.getValue() >= 0 && piece.getValue() != 800) || // Droite Bas
+                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() - 1 && piece.getValue() >= 0 && piece.getValue() != 800) || // Bas Gauche
+                (db.getDragViewOffsetX() == source.getX() + 2 && db.getDragViewOffsetY() == source.getY() + 1 && piece.getValue() >= 0 && piece.getValue() != 800)) /* Bas Droite */;
     }
 
     public static void blackKnightMoves(List<ArrayList<Case>> liste_cases, Case piece) {
@@ -371,9 +375,15 @@ public class Knight {
 
     private static void blackKnightMoveUp(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() > 2 && piece.getY() > 1) { // Case gauche possible
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() > 0) {
+            if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
                 liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 3).get(piece.getY() - 2).getValue() == 0) {
                 // case gauche libre
@@ -384,9 +394,15 @@ public class Knight {
             }
         }
         if (piece.getX() > 2 && piece.getY() < 8) {
-            if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() > 0) {
+            if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() > 0) {
                 // Case droite ennemie
                 liste_cases.get(piece.getX() - 3).get(piece.getY()).setStyle(red); // Case droite ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 3).get(piece.getY()).getValue() == 0) {
                 // Case droite libre
@@ -400,9 +416,15 @@ public class Knight {
 
     private static void blackKnightMoveLeft(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getY() > 2 && piece.getX() > 1) { // Case haut possible
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
+            if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() > 0) {
                 // case haut ennemie
                 liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).setStyle(red); // Case haut ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() - 3).getValue() == 0) {
                 // case haut libre
@@ -413,9 +435,15 @@ public class Knight {
             }
         }
         if (piece.getY() > 2 && piece.getX() < 8) {
-            if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() > 0) {
+            if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() > 0) {
                 // Case bas ennemie
                 liste_cases.get(piece.getX()).get(piece.getY() - 3).setStyle(red); // Case bas ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX()).get(piece.getY() - 3).getValue() == 0) {
                 // Case bas libre
@@ -429,9 +457,15 @@ public class Knight {
 
     private static void blackKnightMoveRight(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getY() < 7 && piece.getX() > 1) { // Case haut possible
-            if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
+            if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() > 0) {
                 // case haut ennemie
                 liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).setStyle(red); // Case haut ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() - 2).get(piece.getY() + 1).getValue() == 0) {
                 // case haut libre
@@ -442,9 +476,15 @@ public class Knight {
             }
         }
         if (piece.getY() < 7 && piece.getX() < 7) {
-            if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() > 0) {
+            if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() > 0) {
                 // Case bas ennemie
                 liste_cases.get(piece.getX()).get(piece.getY() + 1).setStyle(red); // Case bas ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX()).get(piece.getY() + 1).getValue() == 0) {
                 // Case bas libre
@@ -458,9 +498,15 @@ public class Knight {
 
     private static void blackKnightMoveDown(List<ArrayList<Case>> liste_cases, Case piece) {
         if (piece.getX() < 7 && piece.getY() > 1) {
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
+            if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() > 0) {
                 // case gauche ennemie
                 liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).setStyle(red); // Case gauche ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() + 1).get(piece.getY() - 2).getValue() == 0) {
                 // case gauche libre
@@ -471,9 +517,15 @@ public class Knight {
             }
         }
         if (piece.getX() < 7 && piece.getY() < 8) {
-            if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() > 0) {
+            if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 800) {
+                // case gauche ennemie
+                liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(orange); // Case gauche ennemie
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() > 0) {
                 // Case droite ennemie
                 liste_cases.get(piece.getX() + 1).get(piece.getY()).setStyle(red); // Case droite ennemie
+            } else  {
+                echecWhite = false;
             }
             if (liste_cases.get(piece.getX() + 1).get(piece.getY()).getValue() == 0) {
                 // Case droite libre

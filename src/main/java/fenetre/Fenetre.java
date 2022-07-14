@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import board.Board;
 
 /**
- * This class is used to create a fenetre object that is used to display the board and the cards on it.
+ * This class is used to create a window object that is used to display the board and the cards on it.
  *
  * @author Lacroix Baptiste
  */

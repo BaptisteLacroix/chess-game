@@ -22,9 +22,12 @@ public class Bishop {
     private static final String red = "-fx-background-color: red;";
     private static final String orange = "-fx-background-color: orange;";
     private static boolean echecBlack = false;
-
+    private static boolean echecWhite = false;
     public static boolean isEchecBlack() {
         return echecBlack;
+    }
+    public static boolean isEchecWhite() {
+        return echecWhite;
     }
 
     /**
@@ -393,7 +396,8 @@ public class Bishop {
                 while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() < 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() > 0) &&
-                                    (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
+                                    (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY()) ||
+                            ((Case) ((HBox) vBox.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() - n - 1)).getValue() == 800) {
                         isValid = false;
                     }
                     n++;
@@ -405,7 +409,8 @@ public class Bishop {
                 while (isValid && (source.getX() - n) > db.getDragViewOffsetX() && (source.getY() - n) < db.getDragViewOffsetY()) {
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() < 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() > 0) &&
-                                    (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY())) {
+                                    (source.getX() - n != db.getDragViewOffsetX() && source.getY() - n != db.getDragViewOffsetY()) ||
+                            ((Case) ((HBox) vBox.getChildren().get(source.getX() - n - 1)).getChildren().get(source.getY() + n - 1)).getValue() == 800) {
                         isValid = false;
                     }
                     n++;
@@ -417,7 +422,8 @@ public class Bishop {
                 while (isValid && (source.getX() - n) < db.getDragViewOffsetX() && (source.getY() - n) > db.getDragViewOffsetY()) {
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() < 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() > 0) &&
-                                    (source.getX() + n + 1 != db.getDragViewOffsetX() && source.getY() - n - 1 != db.getDragViewOffsetY())) {
+                                    (source.getX() + n + 1 != db.getDragViewOffsetX() && source.getY() - n - 1 != db.getDragViewOffsetY()) ||
+                            ((Case) ((HBox) vBox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() - n - 2)).getValue() == 800) {
                         isValid = false;
                     }
                     n++;
@@ -429,7 +435,8 @@ public class Bishop {
                 while (isValid && (source.getX() + n) < db.getDragViewOffsetX() && (source.getY() + n) < db.getDragViewOffsetY()) {
                     if (((Case) ((HBox) vBox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() < 0 ||
                             (((Case) ((HBox) vBox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() > 0) &&
-                                    (source.getX() + n + 1!= db.getDragViewOffsetX() && source.getY() + n + 1 != db.getDragViewOffsetY())) {
+                                    (source.getX() + n + 1!= db.getDragViewOffsetX() && source.getY() + n + 1 != db.getDragViewOffsetY()) ||
+                            ((Case) ((HBox) vBox.getChildren().get(source.getX() + n)).getChildren().get(source.getY() + n)).getValue() == 800) {
                         isValid = false;
                     }
                     n++;
@@ -472,7 +479,11 @@ public class Bishop {
         int n = 2;
         boolean adversaire = false;
         while (!adversaire && piece.getX() - n >= 0 && piece.getY() - n >= 0) {
-            if (liste_cases.get(piece.getX() - n).get(piece.getY() - n).getValue() > 0) {
+            if (liste_cases.get(piece.getX() - n).get(piece.getY() - n).getValue() == 800) {
+                liste_cases.get(piece.getX() - n).get(piece.getY() - n).setStyle(orange);
+                adversaire = true;
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() - n).get(piece.getY() - n).getValue() > 0) {
                 liste_cases.get(piece.getX() - n).get(piece.getY() - n).setStyle(red);
                 adversaire = true;
             } else if (liste_cases.get(piece.getX() - n).get(piece.getY() - n).getValue() < 0) {
@@ -499,7 +510,11 @@ public class Bishop {
         int n = 1;
         boolean adversaire = false;
         while (!adversaire && piece.getX() - n > 0 && piece.getY() + n <= 8) {
-            if (liste_cases.get(piece.getX() - n - 1).get(piece.getY() + n - 1).getValue() > 0) {
+            if (liste_cases.get(piece.getX() - n - 1).get(piece.getY() + n - 1).getValue() == 800) {
+                liste_cases.get(piece.getX() - n - 1).get(piece.getY() + n - 1).setStyle(orange);
+                adversaire = true;
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() - n - 1).get(piece.getY() + n - 1).getValue() > 0) {
                 liste_cases.get(piece.getX() - n - 1).get(piece.getY() + n - 1).setStyle(red);
                 adversaire = true;
             } else if (liste_cases.get(piece.getX() - n - 1).get(piece.getY() + n - 1).getValue() < 0) {
@@ -526,7 +541,11 @@ public class Bishop {
         int n = 1;
         boolean adversaire = false;
         while (!adversaire && piece.getX() + n <= 8 && piece.getY() - n > 0) {
-            if (liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).getValue() > 0) {
+            if (liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).getValue() == 800) {
+                liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).setStyle(orange);
+                adversaire = true;
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).getValue() > 0) {
                 liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).setStyle(red);
                 adversaire = true;
             } else if (liste_cases.get(piece.getX() + n - 1).get(piece.getY() - n - 1).getValue() < 0) {
@@ -553,7 +572,11 @@ public class Bishop {
         int n = 0;
         boolean adversaire = false;
         while (!adversaire && piece.getX() + n < 8 && piece.getY() + n < 8) {
-            if (liste_cases.get(piece.getX() + n).get(piece.getY() + n).getValue() > 0) {
+            if (liste_cases.get(piece.getX() + n).get(piece.getY() + n).getValue() == 800) {
+                liste_cases.get(piece.getX() + n).get(piece.getY() + n).setStyle(orange);
+                adversaire = true;
+                echecWhite = true;
+            } else if (liste_cases.get(piece.getX() + n).get(piece.getY() + n).getValue() > 0) {
                 liste_cases.get(piece.getX() + n).get(piece.getY() + n).setStyle(red);
                 adversaire = true;
             } else if (liste_cases.get(piece.getX() + n).get(piece.getY() + n).getValue() < 0) {
